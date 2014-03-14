@@ -9,19 +9,24 @@ configure = ($routeProvider, $locationProvider, $httpProvider) ->
       templateUrl: "index-view"
     .when "/events",
       templateUrl: "events-view"
+    .when "/events2",
+      templateUrl: "events2-view"
+      controller: "EventEditor2Ctrl"
     .when "/news",
       templateUrl: "news-view"
     .when "/notices",
       templateUrl: "notices-view"
 
 main = () ->
-  console.log "initialize adminApp"
+
+angular.module('appLibs', [])
 
 angular.module('adminApp.ctrl', [
   "EventEditorCtrl"
   "NoticeEditorCtrl"
   "NewsEditorCtrl"
 ])
+
 angular.module('adminApp.div', [
 
 ])
@@ -35,9 +40,14 @@ angular.module('adminApp.svc', [
 angular.module('adminApp', [
     'ngSanitize'
     'ngRoute'
+    'core'
+    'appLibs'
+    'ui.date',
+    'ui.select2'
+    'uuid4'
     'ui.codemirror'
     'adminApp.ctrl'
     'adminApp.svc'
   ])
   .config([ '$routeProvider', '$locationProvider', '$httpProvider', configure ])
-  .run([main])
+  .run(["$core", main])

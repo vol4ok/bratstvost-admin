@@ -6,9 +6,9 @@ moment = require "moment"
 crypto = require "crypto"
 
 mg.connect('mongodb://localhost/bratstvost-3')
-{Event} = require "./models/event"
+{Event} = require  "./models/event"
 {Notice} = require "./models/notice"
-{News} = require "./models/news"
+{News} = require   "./models/news"
 
 _ = require "lodash"
 require("uasync")(_)

@@ -31,7 +31,9 @@ module.exports = (grunt) ->
     coffee:
       client:
         files:
+          "temp/js/core.js":                           "scripts/core.coffee"
           "temp/js/admin-app.js":                      "scripts/admin-app.coffee"
+          "temp/js/factories.js":                       "scripts/factories/*.coffee"
           "temp/js/services.js":                       "scripts/services/*.coffee"
           "temp/js/controllers.js":                    "scripts/controllers/*.coffee"
       server:
@@ -54,21 +56,20 @@ module.exports = (grunt) ->
       bootstrap:
         options:
           paths: [
-            "styles/config"
-            "bower_components/bootstrap/less"
+            "styles"
+            "bower_components"
           ]
         files:
-          "temp/css/bootstap.css": "styles/core/bootstrap.less"
+          "temp/css/bootstrap.css": "styles/shared.less"
 
       styles: 
         options:
           paths: [
-            "styles/config"
-            "bower_components/bootstrap/less"
+            "styles"
+            "bower_components"
           ]
         files:
-          "temp/css/layout.css": "styles/pages/layout.less"
-          "temp/css/index.css": "styles/pages/index.less"
+          "temp/css/admin-app.css": "styles/admin-app.less"
 
 
     ### ------------------------ ###
@@ -78,39 +79,53 @@ module.exports = (grunt) ->
     concat:
       core:
         src: [
-          "bower_components/jquery2/jquery.js"
+          "bower_components/jquery/dist/jquery.js"
           "bower_components/angular/angular.js"
           "bower_components/angular-route/angular-route.js"
           "bower_components/angular-sanitize/angular-sanitize.js"
+          "bower_components/jquery-ui/ui/jquery-ui.js"
           "bower_components/codemirror/lib/codemirror.js"
           "bower_components/codemirror/mode/javascript/javascript.js"
           "bower_components/angular-ui-codemirror/ui-codemirror.js"
           "bower_components/moment/min/moment.min.js"
           "bower_components/moment/min/langs.min.js"
           "bower_components/node-uuid/uuid.js"
+          "bower_components/angular-uuid4/angular-uuid4.js"
+          "bower_components/marked/lib/marked.js"
+          "bower_components/angular-ui-date/src/date.js"
+          "bower_components/select2/select2.js"
+          "bower_components/angular-ui-select2/src/select2.js"
         ]
         dest: "public/js/core.js"
 
       app:
         src: [
+          "temp/js/core.js"
+          "temp/js/admin-app.js"
+          "temp/js/factories.js"
           "temp/js/services.js"
           "temp/js/controllers.js" 
-          "temp/js/admin-app.js"
         ]
         dest: "public/js/app.js"
 
       dist:
         src: [
-          "bower_components/jquery2/jquery.min.js"
+          "bower_components/jquery/dist/jquery.min.js"
           "bower_components/angular/angular.min.js"
           "bower_components/angular-route/angular-route.min.js"
           "bower_components/angular-sanitize/angular-sanitize.min.js"
+          "bower_components/jquery-ui/ui/jquery-ui.js"
           "bower_components/codemirror/lib/codemirror.js"
           "bower_components/codemirror/mode/javascript/javascript.js"
           "bower_components/angular-ui-codemirror/ui-codemirror.js"
           "bower_components/moment/min/moment.min.js"
           "bower_components/moment/min/langs.min.js"
           "bower_components/node-uuid/uuid.js"
+          "bower_components/angular-uuid4/angular-uuid4.js"
+          "bower_components/marked/lib/marked.js"
+          "bower_components/angular-ui-date/src/date.js"
+          "bower_components/select2/select2.js"
+          "bower_components/angular-ui-select2/src/select2.js"
         ]
         dest: "temp/js/core.js"
 
@@ -119,10 +134,10 @@ module.exports = (grunt) ->
           "styles/core/bratstvost-icon-font.css"
           "bower_components/codemirror/lib/codemirror.css"
           "bower_components/codemirror/theme/tomorrow-night-eighties.css"
+          "bower_components/select2/select2.css"
+          "bower_components/jquery-ui/themes/flick/jquery-ui.css"
           "temp/css/bootstap.css"
-          "temp/css/layout.css"
-          "temp/css/index.css"
-          
+          "temp/css/admin-app.css"
         ]
         dest: "public/css/styles.css"
 
