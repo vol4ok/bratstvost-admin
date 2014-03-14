@@ -136,7 +136,7 @@ module.exports = (grunt) ->
           "bower_components/codemirror/theme/tomorrow-night-eighties.css"
           "bower_components/select2/select2.css"
           "bower_components/jquery-ui/themes/flick/jquery-ui.css"
-          "temp/css/bootstap.css"
+          "temp/css/bootstrap.css"
           "temp/css/admin-app.css"
         ]
         dest: "public/css/styles.css"
@@ -187,6 +187,8 @@ module.exports = (grunt) ->
 
     cssmin:
       dist:
+        options:
+          keepSpecialComments: 0
         files:
           "dist/public/css/styles.css": "public/css/styles.css"
 
