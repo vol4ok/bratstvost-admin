@@ -6,12 +6,13 @@ configure = ($routeProvider, $locationProvider, $httpProvider) ->
 
   $routeProvider
     .when "/",
-      templateUrl: "index-view"
-    .when "/events",
-      templateUrl: "events-view"
-    .when "/events2",
       templateUrl: "events2-view"
       controller: "EventEditor2Ctrl"
+    .when "/events",
+      templateUrl: "events-view"
+    # .when "/events2",
+    #   templateUrl: "events2-view"
+    #   controller: "EventEditor2Ctrl"
     .when "/news",
       templateUrl: "news-view"
     .when "/notices",
@@ -46,6 +47,8 @@ angular.module('adminApp', [
     'ui.select2'
     'uuid4'
     'ui.codemirror'
+    'ui.bootstrap.tpls'
+    'ui.bootstrap'
     'adminApp.ctrl'
     'adminApp.svc'
   ])

@@ -1,6 +1,11 @@
 <script type="text/ng-template" id="events2-view">
   <div class="container">
     <div class="row">
+      <div class="col-sm-12">
+        <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-sm-8">
         <form class="form-horizontal" role="form">
 
@@ -8,7 +13,7 @@
             <label for="new-event-date" class="col-sm-2 control-label">Дата</label>
             <div class="col-sm-10">
               <input 
-                ui-date
+                ui-date="dateOptions"
                 class="form-control" 
                 id="new-event-date" 
                 placeholder="Date" 
@@ -207,10 +212,23 @@
           </div>
           
         </form>
-        
-        <pre>{{eventJSON}}</pre>
 
+      </div>
+
+      <div class="col-sm-4">
+        <div class="event-preview">
+          <eventview event="event"></eventview>
+        </div>
+        <br>
+        <button class="btn btn-primary" ng-click="saveEvent()">Сохранить</button>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <pre>{{eventJSON}}</pre>
+        </div>
       </div>
     </div>
   </div>
+  
 </script>

@@ -36,6 +36,7 @@ module.exports = (grunt) ->
           "temp/js/factories.js":                       "scripts/factories/*.coffee"
           "temp/js/services.js":                       "scripts/services/*.coffee"
           "temp/js/controllers.js":                    "scripts/controllers/*.coffee"
+          "temp/js/directives.js":                     "scripts/directives/*.coffee"
       server:
         options:
           bare: yes
@@ -83,6 +84,8 @@ module.exports = (grunt) ->
           "bower_components/angular/angular.js"
           "bower_components/angular-route/angular-route.js"
           "bower_components/angular-sanitize/angular-sanitize.js"
+          "bower_components/angular-bootstrap/ui-bootstrap-tpls.js"
+          "bower_components/angular-bootstrap/ui-bootstrap.js"
           "bower_components/jquery-ui/ui/jquery-ui.js"
           "bower_components/codemirror/lib/codemirror.js"
           "bower_components/codemirror/mode/javascript/javascript.js"
@@ -105,6 +108,7 @@ module.exports = (grunt) ->
           "temp/js/factories.js"
           "temp/js/services.js"
           "temp/js/controllers.js" 
+          "temp/js/directives.js" 
         ]
         dest: "public/js/app.js"
 
@@ -114,6 +118,8 @@ module.exports = (grunt) ->
           "bower_components/angular/angular.min.js"
           "bower_components/angular-route/angular-route.min.js"
           "bower_components/angular-sanitize/angular-sanitize.min.js"
+          "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"
+          "bower_components/angular-bootstrap/ui-bootstrap.min.js"
           "bower_components/jquery-ui/ui/jquery-ui.js"
           "bower_components/codemirror/lib/codemirror.js"
           "bower_components/codemirror/mode/javascript/javascript.js"

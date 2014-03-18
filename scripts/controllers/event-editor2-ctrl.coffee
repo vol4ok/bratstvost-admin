@@ -1,10 +1,14 @@
-angular.module('coreLibs').controller "EventEditor2Ctrl", ($scope, uuid4) ->
+angular.module('coreLibs').controller "EventEditor2Ctrl", ($scope, $core, uuid4) ->
 
     # marked.setOptions
     #   gfm: false
     #   tables: false
 
-    $scope.dateOptions = {}
+    $scope.dateOptions =
+      dateFormat: 'dd.mm.yy'
+      firstDay: 1
+
+    $scope.alerts = []
 
     $scope.newEvent = {
       date: new Date
@@ -19,6 +23,10 @@ angular.module('coreLibs').controller "EventEditor2Ctrl", ($scope, uuid4) ->
       published: true
       type: 'event'
     }
+
+    $scope.saveEvent = ->
+      $core.$events.create($scope.event).then ->
+        $scope.alerts.push({type: "success", msg: "Added!"})
 
     filterText = (str) ->
       return str
@@ -79,4 +87,6 @@ angular.module('coreLibs').controller "EventEditor2Ctrl", ($scope, uuid4) ->
     $scope.eventJSON = getEvent($scope.newEvent)
 
     $scope.$watchCollection "newEvent", ->
-      $scope.eventJSON = JSON.stringify(getEvent($scope.newEvent), null, "  ")
+      $scope.event = getEvent($scope.newEvent)
+      $scope.eventJSON = JSON.stringify($scope.event, null, "  ")
+
