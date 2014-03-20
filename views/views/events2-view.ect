@@ -16,7 +16,7 @@
                 ui-date="dateOptions"
                 class="form-control" 
                 id="new-event-date" 
-                placeholder="Date" 
+                placeholder="Дата" 
                 ng-model="newEvent.date">
             </div>
           </div>
@@ -30,7 +30,7 @@
                 list="title-suggestions"
                 class="form-control" 
                 id="new-event-title" 
-                placeholder="Title" 
+                placeholder="Название" 
                 ng-model="newEvent.title">
 
               <datalist id="title-suggestions">
@@ -40,6 +40,7 @@
                 <option value="Выезд в ПНИ г.Червень">
                 <option value="Посещение ПНИ в Дражне">
                 <option value="Посещение ПНИ в г. Молодечно">
+                <option value="Собрание братства">
               </datalist>
             </div>
 
@@ -48,7 +49,7 @@
           <div class="form-group">
             <label for="new-event-body" class="col-sm-2 control-label">Описание</label>
             <div class="col-sm-10">
-              <textarea id="new-event-body" ng-model="newEvent.body" class="form-control" rows="3" placeholder="Body"></textarea>
+              <textarea id="new-event-body" ng-model="newEvent.body" class="form-control" rows="3" placeholder="Описание"></textarea>
             </div>
           </div>
 
@@ -60,7 +61,7 @@
                 list="oraganizer-suggestions"
                 class="form-control" 
                 id="new-event-oraganizer" 
-                placeholder="Organizer" 
+                placeholder="Организатор" 
                 ng-model="newEvent.organizer">
 
               <datalist id="oraganizer-suggestions">
@@ -81,7 +82,7 @@
                 list="phone-suggestions"
                 class="form-control" 
                 id="new-event-phone" 
-                placeholder="Phone" 
+                placeholder="Телефон" 
                 ng-model="newEvent.phone">
 
               <datalist id="phone-suggestions">
@@ -102,7 +103,7 @@
                 list="meetingtime-suggestions"
                 class="form-control" 
                 id="new-event-meetingtime" 
-                placeholder="Meeting time" 
+                placeholder="Время встречи" 
                 ng-model="newEvent.meeting_time">
                 
               <datalist id="meetingtime-suggestions">
@@ -131,13 +132,14 @@
                 list="meetingplace-suggestions"
                 class="form-control" 
                 id="new-event-meetingplace" 
-                placeholder="Meeting place" 
+                placeholder="Место встречи" 
                 ng-model="newEvent.meeting_place">
                 
               <datalist id="meetingplace-suggestions">
                 <option value="ст. м. Уручье">
                 <option value="ст. м. Каменная Горка">
                 <option value="ст. м. Петровщина">
+                <option value="ст. м. Могилевская">
               </datalist>
             </div>
           </div>
@@ -150,7 +152,7 @@
                 list="eventtime-suggestions"
                 class="form-control" 
                 id="new-event-eventtime" 
-                placeholder="Event time" 
+                placeholder="Время события" 
                 ng-model="newEvent.event_time">
                 
               <datalist id="eventtime-suggestions">
@@ -179,7 +181,7 @@
                 list="eventplace-suggestions"
                 class="form-control" 
                 id="new-event-eventplace" 
-                placeholder="Event place" 
+                placeholder="Место события" 
                 ng-model="newEvent.event_place">
                 
               <datalist id="eventplace-suggestions">
@@ -201,7 +203,7 @@
                 list="cakes-suggestions"
                 class="form-control" 
                 id="new-event-cakes" 
-                placeholder="Cakes" 
+                placeholder="Пироги" 
                 ng-model="newEvent.cakes">
                 
               <datalist id="cakes-suggestions">
