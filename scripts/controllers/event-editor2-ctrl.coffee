@@ -65,6 +65,7 @@ angular.module('coreLibs').controller "EventEditor2Ctrl", ($scope, $core, uuid4)
     getEvent = (newEvent) ->
       event = angular.copy(newEvent)
       event._id = uuid4.generate()
+      event.date = moment(newEvent.date).zone('+0300').format()
       event.title         = filterText(stripP(marked(newEvent.title))).trim()
       event.meeting_time  = filterText(stripP(marked(newEvent.meeting_time))).trim()
       event.meeting_place = filterText(stripP(marked(newEvent.meeting_place))).trim()
