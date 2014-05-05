@@ -1,4 +1,4 @@
-angular.module("coreLibs").directive "eventview", () ->
+angular.module("appLibs").directive "eventview", () ->
   restrict: "E"
   replace: yes
   scope: {

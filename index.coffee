@@ -6,9 +6,11 @@ moment = require "moment"
 crypto = require "crypto"
 
 mg.connect('mongodb://localhost/bratstvost-3')
-{Event} = require  "./models/event"
-{Notice} = require "./models/notice"
-{News} = require   "./models/news"
+{Event} = require   "./models/event"
+{Notice} = require  "./models/notice"
+{News} = require    "./models/news"
+{Member} = require "./models/member"
+{Video} = require "./models/video"
 
 _ = require "lodash"
 require("uasync")(_)
@@ -192,6 +194,61 @@ app.put "/api/news/:id", restrict, (req, res) ->
 app.del "/api/news/:id", restrict, (req, res) ->
   console.log "DELETE".red, "/api/news/:id", req.params
   News.findByIdAndRemove req.params.id, (err, result) ->
+    return res.json(status: "ERR", message: err) if err
+    res.json(status: "OK")
+
+### MEMBERS ###
+
+app.get "/api/members", (req, res) ->
+  console.log "GET".green, "/api/members"
+  Member.find {}, (err, results) ->
+    return res.json(status: "ERR", message: err) if err
+    res.json(results)
+
+app.post "/api/members", restrict, (req, res) ->
+  console.log "POST".cyan, "/api/members", req.body
+  Member.create req.body, (err, result) ->
+    return res.json(status: "ERR", message: err) if err
+    res.json(status: "OK")
+
+app.put "/api/members/:id", restrict, (req, res) ->
+  console.log "PUT".magenta, "/api/members/:id", req.params, req.body
+  delete req.body._id
+  Member.findByIdAndUpdate req.params.id, req.body, upsert: yes, (err, result) ->
+    return res.json(status: "ERR", message: err) if err
+    res.json(status: "OK")
+
+app.del "/api/members/:id", restrict, (req, res) ->
+  console.log "DELETE".red, "/api/members/:id", req.params
+  Member.findByIdAndRemove req.params.id, (err, result) ->
+    return res.json(status: "ERR", message: err) if err
+    res.json(status: "OK")
+
+
+### VIDEO ###
+
+app.get "/api/video", (req, res) ->
+  console.log "GET".green, "/api/video"
+  Video.find {}, (err, results) ->
+    return res.json(status: "ERR", message: err) if err
+    res.json(results)
+
+app.post "/api/video", restrict, (req, res) ->
+  console.log "POST".cyan, "/api/video", req.body
+  Video.create req.body, (err, result) ->
+    return res.json(status: "ERR", message: err) if err
+    res.json(status: "OK")
+
+app.put "/api/video/:id", restrict, (req, res) ->
+  console.log "PUT".magenta, "/api/video/:id", req.params, req.body
+  delete req.body._id
+  Video.findByIdAndUpdate req.params.id, req.body, upsert: yes, (err, result) ->
+    return res.json(status: "ERR", message: err) if err
+    res.json(status: "OK")
+
+app.del "/api/video/:id", restrict, (req, res) ->
+  console.log "DELETE".red, "/api/video/:id", req.params
+  Video.findByIdAndRemove req.params.id, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
 

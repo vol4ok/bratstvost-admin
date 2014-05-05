@@ -1,5 +1,4 @@
 $coreEvents = ($q, $http) ->
-  $coreEvents.$inject = 
 
   currentCollection = []
   currentItem = null

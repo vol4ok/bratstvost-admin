@@ -1,12 +1,15 @@
-angular.module('coreLibs').controller "EventEditor2Ctrl", ($scope, $core, uuid4) ->
+angular.module('appLibs').controller "EventEditor2Ctrl", ($scope, $core, uuid4, phoneHelpers, textHelpers) ->
 
     # marked.setOptions
     #   gfm: false
     #   tables: false
 
+    {filterText, stripP, FSM} = textHelpers
+
     $scope.dateOptions =
       dateFormat: 'dd.mm.yy'
       firstDay: 1
+      dafaultDate: moment().startOf('day').toDate()
 
     $scope.alerts = []
 
@@ -28,50 +31,16 @@ angular.module('coreLibs').controller "EventEditor2Ctrl", ($scope, $core, uuid4)
       $core.$events.create($scope.event).then ->
         $scope.alerts.push({type: "success", msg: "Added!"})
 
-    filterText = (str) ->
-      return str
-        .replace(/[ ]{2,}/, " ")
-        .replace(/ПНИ/g, "<abbr title=\"Психоневрологический интернат\">ПНИ</abbr>")
-
-    REXP_STRIP_P = /^<p>(.*)<\/p>\s*$/
-    stripP = (str) -> 
-      if REXP_STRIP_P.test(str) then RegExp.$1 else str
-
-    parse_phone = (phone) ->
-      return undefined unless phone
-      res = ""
-      for c,i in phone
-        res += c if c in "+0123456789".split("")
-      return {
-        nums: res.slice(-7)
-        code: res.slice(-9,-7)
-      }
-
-    format_phone_nice = (p) ->
-      p = parse_phone(p) if typeof p is "string"
-      n = p.nums.split("")
-      return "8 (0#{p.code}) #{n[0]}#{n[1]}#{n[2]}-#{n[3]}#{n[4]}-#{n[5]}#{n[6]}"
-
-    format_phone_raw = (p) ->
-      p = parse_phone(p) if typeof p is "string"
-      return "+375#{p.code}#{p.nums}"
-
-    format_phone_link = (phone_str) ->
-      if phone = parse_phone(phone_str)
-        return "<a href=\"tel:#{format_phone_raw(phone)}\">#{format_phone_nice(phone)}</a>"
-      return ""
-
-
     getEvent = (newEvent) ->
       event = angular.copy(newEvent)
       event._id = uuid4.generate()
-      event.date = moment(newEvent.date).zone('+0300').format()
-      event.title         = filterText(stripP(marked(newEvent.title))).trim()
-      event.meeting_time  = filterText(stripP(marked(newEvent.meeting_time))).trim()
-      event.meeting_place = filterText(stripP(marked(newEvent.meeting_place))).trim()
-      event.event_time    = filterText(stripP(marked(newEvent.event_time))).trim()
-      event.event_place   = filterText(stripP(marked(newEvent.event_place))).trim()
-      event.phone = format_phone_link(newEvent.phone)
+      event.date = moment.utc(newEvent.date).zone('+0300').startOf('day').add(12,'h').format()
+      event.title         = FSM(newEvent.title)
+      event.meeting_time  = FSM(newEvent.meeting_time)
+      event.meeting_place = FSM(newEvent.meeting_place)
+      event.event_time    = FSM(newEvent.event_time)
+      event.event_place   = FSM(newEvent.event_place)
+      event.phone = phoneHelpers.formatPhoneLink(newEvent.phone)
       event.body  = filterText(marked(newEvent.body)).trim()
       event.created = new Date
       event.updated = new Date
@@ -80,9 +49,7 @@ angular.module('coreLibs').controller "EventEditor2Ctrl", ($scope, $core, uuid4)
         event.custom_field.push
           icon: "cake-1"
           term: "Выпечка"
-          desc: newEvent.cakes
-        
-
+          desc: FSM(newEvent.cakes)
       return event
 
     $scope.eventJSON = getEvent($scope.newEvent)

@@ -1,0 +1,215 @@
+<script type="text/ng-template" id="myModalContent.html">
+  <div class="modal-header">
+    <h4 class="modal-title">Add member</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6" class="form-horizontal">
+        <div class="form-group">
+          <label for="full-name-input">Full name:</label>
+          <input type="text" 
+                 id="full-name-input" 
+                 class="form-control"
+                 ng-model="newMember.fullName">
+        </div>
+
+        <div class="form-group">
+          <label>Last name:</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <input type="checkbox"
+                     ng-model="lastNameEnabled"
+                     ng-click="newMember.lastName = ''">
+            </div>
+            <div ng-switch on="lastNameEnabled">
+              <input type="text"
+                     ng-switch-when="true"
+                     class="form-control"
+                     ng-init="newMember.lastName = newMember.lastName || memberObj.lastName"
+                     ng-model="newMember.lastName">
+              <input type="text" 
+                     ng-switch-default
+                     class="form-control"
+                     ng-value="memberObj.lastName"
+                     ng-disabled="true">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>First name:</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <input type="checkbox"
+                     ng-model="firstNameEnabled"
+                     ng-click="newMember.firstName = ''">
+            </div>
+            <div ng-switch on="firstNameEnabled">
+              <input type="text"
+                     ng-switch-when="true"
+                     class="form-control"
+                     ng-init="newMember.firstName = newMember.firstName || memberObj.firstName"
+                     ng-model="newMember.firstName">
+              <input type="text" 
+                     ng-switch-default
+                     class="form-control"
+                     ng-value="memberObj.firstName"
+                     ng-disabled="true">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Middle name:</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <input type="checkbox"
+                     ng-model="middleNameEnabled"
+                     ng-click="newMember.middleName = ''">
+            </div>
+            <div ng-switch on="middleNameEnabled">
+              <input type="text"
+                     ng-switch-when="true"
+                     class="form-control"
+                     ng-init="newMember.middleName = newMember.middleName || memberObj.middleName"
+                     ng-model="newMember.middleName">
+              <input type="text" 
+                     ng-switch-default
+                     class="form-control"
+                     ng-value="memberObj.middleName"
+                     ng-disabled="true">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="btn-group" id="is-male-input">
+              <button type="button" class="btn btn-default" ng-model="newMember.male" btn-radio="true">Male</button>
+              <button type="button" class="btn btn-default" ng-model="newMember.male" btn-radio="false">Female</button>
+          </div>
+        </div>
+
+        
+
+        <div class="form-group">
+          <label for="position-input">Position:</label>
+          <input type="text" 
+                 id="position-input" 
+                 class="form-control"
+                 ng-model="newMember.position">
+        </div>
+
+        <div class="form-group">
+          <label for="photo-id-input">PhotoID:</label>
+          <input type="text" 
+                 id="photo-id-input" 
+                 class="form-control"
+                 ng-model="newMember.photoId">
+        </div>
+
+        <div class="form-group">
+          <label for="phone-input">Phone:</label>
+          <input type="text" 
+                 id="phone-input" 
+                 class="form-control"
+                 ng-model="newMember.phone">
+        </div>
+
+        <div class="form-group">
+          <label for="email-input">Email:</label>          
+          <div class="input-group">
+            <span class="input-group-addon">@</span>
+            <input type="text" 
+                   id="email-input" 
+                   class="form-control"
+                   ng-model="newMember.email">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="skype-input">Skype:</label>
+          <input type="text" 
+                 id="skype-input" 
+                 class="form-control"
+                 ng-model="newMember.skype">
+        </div>
+
+        <div class="form-group">
+          <label for="info-input">Info:</label>
+          <textarea type="text" 
+                 id="info-input" 
+                 class="form-control"
+                 ng-model="newMember.info"></textarea>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <pre>{{memberJSON}}</pre>
+        
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save()">Сохранить</button>
+    <button class="btn btn-warning" ng-click="cancel()">Отмена</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="members-view">
+  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-12">
+      <p>
+        <button class="btn btn-primary" ng-click="open()">+Add member</button>
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <table class="table table-hover table-condensed table-data">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th></th>
+        </tr>
+        <tr ng-repeat="memb in members | orderBy:'fullName'">
+          <td>{{$index+1}}</td>
+          <td><strong>{{memb.lastName}}</strong> {{memb.firstName}}</td>
+          <td ng-bind-html="memb.position"></td>
+          <td>{{memb.phone}}</td>
+          <td>{{memb.email}}</td>
+          <td>
+            <div class="btn-group btn-group-sm">
+              <button type="button" class="btn btn-warning" ng-click="onEdit($index, memb)">
+                Edit
+              </button>
+              <button type="button" class="btn btn-danger" ng-click="onDelete($index, memb)">
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  
+
+</div>
+
+</script>

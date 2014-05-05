@@ -17,6 +17,10 @@ configure = ($routeProvider, $locationProvider, $httpProvider) ->
       templateUrl: "news-view"
     .when "/notices",
       templateUrl: "notices-view"
+    .when "/members",
+      templateUrl: "members-view"
+      controller: "MembersCtrl"
+
 
 main = () ->
 

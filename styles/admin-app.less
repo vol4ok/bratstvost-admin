@@ -28,6 +28,22 @@ input, button, textarea {
   height: 640px;
 }
 
+input[type="checkbox"]{
+  -webkit-appearance: checkbox !important;
+}
+
+.input-group-addon {
+  cursor: default;
+  .user-select(none);
+}
+
+.table-data {
+  font-size: 12px;
+  tr {
+    cursor: pointer;
+  }
+}
+
 @import "pages/_events";
 @import "pages/_notice";
 @import "pages/_news";

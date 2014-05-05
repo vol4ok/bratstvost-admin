@@ -1,0 +1,32 @@
+<script type="text/ng-template" id="video-view">
+  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <p>
+        <button class="btn btn-primary" ng-click="open()">+Add member</button>
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <table class="table table-hover table-">
+        <tr>
+          <th>#</th>
+          <th>Video ID</th>
+          <th>Title</th>
+        </tr>
+        <tr ng-repeat="v in video | orderBy:'published_date'">
+          <td>{{$index+1}}</td>
+          <td>{{v.video_id}}</td>
+          <td>{{v.title}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  
+
+</div>
+
+</script>
