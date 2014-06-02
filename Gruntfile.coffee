@@ -18,11 +18,10 @@ module.exports = (grunt) ->
     watch: 
       less:
         files: 'styles/**/*.less'
-        tasks: ['less']
+        tasks: ['styles']
       coffee:
         files: 'scripts/**/*.coffee'
-        tasks: ['coffee:client']
-
+        tasks: ["coffee:client", "concat:app"]
 
     ### ------------------------ ###
     ### ******** COFFEE ******** ###
