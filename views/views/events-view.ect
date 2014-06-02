@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="events-view">
-  
+
   <div ng-controller="EventEditorCtrl">
     <div class="row">
       <div class="col-sm-5">
@@ -13,8 +13,17 @@
     <br>
     <div class="row">
       <div class="col-sm-5">
-        <ul class="list-group event-list">
-          <li class="list-group-item" ng-class="{active: ev._id == data.currentEvent._id}" ng-repeat="ev in data.eventsArr" ng-click="selectEvent(ev)" >
+          <p>Поиск: <input type="text" ng-model="query">
+          Сортировать по:
+          <select ng-model="orderProp" >
+              <option value="date" selected>Дате</option>
+              <option value="title">Заголовку</option>
+          </select>
+          <a ng-init="orderDir=false" ng-click="orderDir=!orderDir">↑ ↓</a>
+          </p>
+          <ul class="list-group event-list">
+            <li class="list-group-item" ng-class="{active: ev._id == data.currentEvent._id}"
+              ng-repeat="ev in data.eventsArr | filter:query | orderBy:orderProp:orderDir" ng-click="selectEvent(ev)" >
             <div class="row">
               <div class="col-sm-3">{{ev.date | date:'dd MMM'}}</div>
               <div class="col-sm-9" ng-bind-html="ev.title">{{ev.title}}</div>

@@ -15,8 +15,17 @@
 
     <div class="row">
       <div class="col-sm-5">
-        <ul class="list-group notices-list">
-          <li class="list-group-item" ng-class="{active: notice._id == data.current._id, showed: notice.isShowed == true}"  ng-repeat="notice in data.noticesArr" ng-click="select(notice)">
+          <p>Поиск: <input type="text" ng-model="query">
+              Сортировать по:
+              <select ng-model="orderProp" >
+                  <option value="body">Содержимому</option>
+              </select>
+              <a ng-init="orderDir=false" ng-click="orderDir=!orderDir">↑ ↓</a>
+          </p>
+
+          <ul class="list-group notices-list">
+          <li class="list-group-item" ng-class="{active: notice._id == data.current._id, showed: notice.isShowed == true}"
+              ng-repeat="notice in data.noticesArr | filter:query | orderBy:orderProp:orderDir" ng-click="select(notice)">
             {{notice.body}}
           </li>
         </ul>
