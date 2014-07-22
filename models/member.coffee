@@ -2,7 +2,6 @@ mg = require "mongoose"
 {Schema} = mg
 
 MemberSchema = new Schema
-  _id: String
   fullName: { type: String, trim: true }
   lastName: { type: String, trim: true }
   firstName: { type: String, trim: true }
@@ -18,6 +17,5 @@ MemberSchema = new Schema
   info: String
   created: { type: Date, default: Date.now }
   updated: { type: Date, default: Date.now }
-  , _id: false
 
 exports.Member = mg.model('Member', MemberSchema)

@@ -209,7 +209,7 @@ app.post "/api/members", restrict, (req, res) ->
   console.log "POST".cyan, "/api/members", req.body
   Member.create req.body, (err, result) ->
     return res.json(status: "ERR", message: err) if err
-    res.json(status: "OK")
+    res.json(status: "OK", _id: result._id)
 
 app.put "/api/members/:id", restrict, (req, res) ->
   console.log "PUT".magenta, "/api/members/:id", req.params, req.body

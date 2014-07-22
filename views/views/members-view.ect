@@ -148,8 +148,29 @@
         </div>
       </div>
 
-      <div class="col-sm-6">
-        <pre>{{memberJSON}}</pre>
+        <div class="col-sm-6">
+            <!--  ==PREVIEW==      -->
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="media member-card">
+                        <a class="pull-left" href="#">
+                            <img class="media-object" width="100" height="125" src="/img/members/small-photo-{{newMember.photoId}}.jpg" alt="model.fullName">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{newMember.firstName}} {{newMember.lastName}}</h4>
+                            <h6 class="media-heading" ng-bind-html="newMember.position"></h6>
+                            <ul class="list-unstyled">
+                                <li ng-if="newMember.phone">Телефон: <a href="tel:{{newMember.phone}}">{{newMember.phone}}</a></li>
+                                <li ng-if="newMember.email">Почта: <a href="mailto:{{newMember.email}}">{{newMember.email}}</a></li>
+                                <li ng-if="newMember.skype">Скайп: {{newMember.skype}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a ng-init="previewHidden=true;" ng-click="previewHidden=!previewHidden">Raw view>></a>
+            <pre ng-hide="previewHidden">{{memberJSON}}</pre>
         
       </div>
     </div>
@@ -172,23 +193,33 @@
   <div class="row">
     <div class="col-sm-12">
       <p>
-        <button class="btn btn-primary" ng-click="open()">+Add member</button>
+        <button class="btn btn-primary" ng-click="onEditOrAdd()">+Add member</button>
       </p>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-12">
-      <table class="table table-hover table-condensed table-data">
+        <p>Поиск: <input type="text" ng-model="query">
+            Сортировать по:
+            <select ng-model="orderProp" >
+                <option value="fullName" selected>ФИО</option>
+                <option value="position">Должность</option>
+                <option value="phone">Телефон</option>
+                <option value="email">Почта</option>
+            </select>
+            <a ng-init="orderDir=false" ng-click="orderDir=!orderDir">↑ ↓</a>
+        </p>
+        <table class="table table-hover table-condensed table-data">
         <tr>
           <th>#</th>
-          <th>Name</th>
-          <th>Position</th>
-          <th>Phone</th>
-          <th>Email</th>
+          <th ng-click="orderProp='fullName';orderDir=!orderDir;">Name</th>
+          <th ng-click="orderProp='position';orderDir=!orderDir;">Position</th>
+          <th ng-click="orderProp='phone';orderDir=!orderDir;">Phone</th>
+          <th ng-click="orderProp='email';orderDir=!orderDir;">Email</th>
           <th></th>
         </tr>
-        <tr ng-repeat="memb in members | orderBy:'fullName'">
+        <tr ng-repeat="memb in members | filter:query | orderBy:orderProp:orderDir">
           <td>{{$index+1}}</td>
           <td><strong>{{memb.lastName}}</strong> {{memb.firstName}}</td>
           <td ng-bind-html="memb.position"></td>
@@ -196,7 +227,7 @@
           <td>{{memb.email}}</td>
           <td>
             <div class="btn-group btn-group-sm">
-              <button type="button" class="btn btn-warning" ng-click="onEdit($index, memb)">
+              <button type="button" class="btn btn-warning" ng-click="onEditOrAdd($index, memb)">
                 Edit
               </button>
               <button type="button" class="btn btn-danger" ng-click="onDelete($index, memb)">
