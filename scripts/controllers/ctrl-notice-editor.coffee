@@ -1,109 +1,80 @@
-class NoticeEditorCtrl
+angular.module('appLibs').controller "NoticeEditorCtrl", ($scope, $noticeSvc, $core, $modal) ->
 
-  _save: (notice) =>
-    @$scope.data.isNew = yes unless notice._id
-    notice._id ?= uuid.v4()
-    notice.updated ?= moment().toISOString()
-    notice.created ?= moment().toISOString()
-    notice.type ?= "notice"
-    # console.log "_save", notice
-    if @$scope.data.isNew
-      @$noticeSvc.create(notice).then (resp) =>
-        # console.log resp
-      @$scope.data.isNew = no
+  $noticeSvc.all().then (notices) ->
+    $scope.notices = notices
+
+  alerts = $scope.alerts = []
+  $scope.isHiden = (notice) ->
+    if notice.published and new Date(notice.show_ends) > new Date()
+      return true
+    else if $scope.activeHiden
+      return true
     else
-      @$noticeSvc.save(notice._id, notice).then (resp) =>
-        # console.log resp
-    @$scope.data.notices[notice._id] = notice;
-    @_updateNoticeArray()
+      return false
 
+  $scope.onDelete = (index, notice) ->
+    console.log("onDelete", index, notice)
+    if confirm("Delete notice?")
+      _.remove $scope.notices, (note) -> note._id == notice._id
+      $noticeSvc.delete(notice._id).then ->
+        alerts.push({type: "danger", msg: "Deleted!"})
 
-  select: (notice) =>
-    @$scope.data.isNew = no
-    @$scope.data.current = notice
+  $scope.onEditOrAdd = (index, note) ->
+    editMode = if note then true else false
+    console.log("onEditOrAdd", index, note)
 
-  create: =>
-    @$scope.data.isNew = yes
-    @$scope.data.current = 
-      _id: uuid.v4()
-      type: "notice"
-      body: ""
-      show_begins: moment().toISOString()
-      show_ends: "9999-12-31T23:59:59.999Z"
-      priority: 0
-      style: ""
-      published: yes
-      created: moment().toISOString()
-      updated: moment().toISOString()
+    modalInstance = $modal.open
+      templateUrl: 'modalContent.html'
+      controller: ($scope, $modalInstance) ->
 
+        if editMode
+          $scope.newNotice = angular.copy(note)
+        else
+          $scope.newNotice = {
+            type: "notice"
+            body: ""
+            show_begins: moment().toISOString()
+            show_ends: "9999-12-31T23:59:59.999Z"
+            priority: 0
+            style: ""
+            published: yes
+            created: moment().toISOString()
+            updated: moment().toISOString()
+          }
 
-  deleteCurrent: =>
-    if confirm("Точно удалить?")
-      @$noticeSvc.delete(@$scope.data.current._id).then (resp) =>
-        # console.log resp
-      delete @$scope.data.notices[@$scope.data.current._id]
-      @_updateNoticeArray()
-      @$scope.data.current = @$scope.data.noticesArr[0]
+        getNoticeObj = (newNotice) ->
+          notice = angular.copy(newNotice)
+          notice.body = newNotice.body.trim()
+          notice.updated = new Date
 
-  saveCurrent: =>
-    if angular.isArray(@$scope.data.current)
-      last = null
-      @$scope.data.isNew = yes
-      for notice in @$scope.data.current
-        @_save(notice)
-        last = notice
-      @$scope.data.current = last
-    else
-      @_save(@$scope.data.current)
+          return notice
 
+        $scope.noticeJSON = JSON.stringify(getNoticeObj($scope.newNotice), null, "  ")
 
-  _updateNoticeArray: =>
-    result = []
-    for k,v of @$scope.data.notices
-      result.push(v)
-    result.sort (a,b) -> a.priority - b.priority
-    @$scope.data.noticesArr = result
+        $scope.$watchCollection "newNotice", ->
+          $scope.noticeObj = getNoticeObj($scope.newNotice)
+          $scope.noticeJSON = JSON.stringify($scope.noticeObj, null, "  ")
 
+        $scope.save = ->
+          result = getNoticeObj($scope.newNotice)
+          console.log "SAVE NOTICE", result
+          $modalInstance.close(result)
 
-  constructor: (@$scope, @$noticeSvc, @$http) ->
-    @$scope.data = {}
+        $scope.cancel = ->
+          $modalInstance.dismiss('cancel')
 
-    @$scope.select = @select
-    @$scope.create = @create
-    @$scope.saveCurrent = @saveCurrent
-    @$scope.deleteCurrent = @deleteCurrent
-
-    @$scope.cmOptions = 
-      lineNumbers: yes
-      lineWrapping: yes
-      mode: "application/json"
-      theme: "tomorrow-night-eighties"
-      tabSize: 2
-
-    @$noticeSvc.all().then (notices) => 
-      currentDate = moment() 
-      @$scope.data.notices = {}
-      for notice in notices
-        notice.isShowed = yes
-
-        if notice.show_ends and currentDate.isAfter(notice.show_ends)
-          notice.isShowed = no
-        @$scope.data.notices[notice._id] = notice
-      @_updateNoticeArray()
-
-    @$scope.$watch "data.current._id", (value) =>
-      # console.log 'NOTICE: $watch "data.current._id"'
-      return if angular.isArray(@$scope.data.current)
-      @$scope.data.currentJSON = JSON.stringify(@$scope.data.current, null, "  ")
-
-    @$scope.$watch "data.currentJSON", =>
-      return unless @$scope.data.currentJSON
-      # console.log 'NOTICE: $watch "data.currentJSON"'
-      try
-        @$scope.data.current = JSON.parse(@$scope.data.currentJSON)
-      catch e
-        @$scope.data.jsonErrorMessage = e.message
-        # console.log ">> jsonErrorMessage", @$scope.data.jsonErrorMessage
-
-angular.module("NoticeEditorCtrl", ["NoticeSvc"])
-  .controller("NoticeEditorCtrl", ["$scope", "NoticeSvc", "$http", NoticeEditorCtrl])
+    .result.then (notice) ->
+      if editMode
+        index = _.findIndex $scope.notices, (note) ->
+          return note._id == notice._id
+        console.log("CHECK", index, $scope.notices, $scope.notices[index], notice)
+        $scope.notices[index] = notice
+        $noticeSvc.save(notice._id, notice).then ->
+          alerts.push({type: "warning", msg: "updated!"})
+      else
+        $scope.notices.push(notice)
+        $noticeSvc.create(notice).then (d) ->
+          notice._id = d._id
+          alerts.push({type: "success", msg: "Added!"})
+    , ->
+      console.log "Modal dismissed"

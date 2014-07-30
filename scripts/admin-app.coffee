@@ -17,6 +17,7 @@ configure = ($routeProvider, $locationProvider, $httpProvider) ->
       templateUrl: "news-view"
     .when "/notices",
       templateUrl: "notices-view"
+      controller: "NoticeEditorCtrl"
     .when "/members",
       templateUrl: "members-view"
       controller: "MembersCtrl"
@@ -26,19 +27,22 @@ main = () ->
 
 angular.module('appLibs', [])
 
+angular.module('adminApp.filters', []).filter('isShowed', ->
+  return (published) ->
+    if published
+      return 'Да'
+    else
+      return 'Нет'
+)
+
 angular.module('adminApp.ctrl', [
   "EventEditorCtrl"
-  "NoticeEditorCtrl"
   "NewsEditorCtrl"
-])
-
-angular.module('adminApp.div', [
-
 ])
 
 angular.module('adminApp.svc', [
   "EventsSvc"
-  "NoticeSvc"
+#  "NoticeSvc"
   "NewsSvc"
 ])
 
@@ -55,6 +59,7 @@ angular.module('adminApp', [
     'ui.bootstrap'
     'adminApp.ctrl'
     'adminApp.svc'
+    'adminApp.filters'
   ])
   .config([ '$routeProvider', '$locationProvider', '$httpProvider', configure ])
   .run(["$core", main])

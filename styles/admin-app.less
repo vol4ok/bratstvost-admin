@@ -42,7 +42,62 @@ input[type="checkbox"]{
   th {
     cursor: pointer;
     background-color: #dddddd;
+    white-space: nowrap;
   }
+  td.ng-binding{
+    padding: 10px;
+  }
+  .btn-group {
+    display: inline-flex;
+  }
+}
+
+table.table-hover {
+  > tbody > tr:hover {
+    > td,
+    > th {
+      background-color: inherit;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Notices color
+.red {
+  background: @pomegranate;
+  border: none;
+  color: white;
+}
+
+.orange {
+  background: @orange;
+  border: none;
+  color: black;
+  a {
+    color: #3e25ff;
+  }
+}
+
+.green {
+  background: @green-sea;
+  border: none;
+  color: white;
+}
+
+.wisteria {
+  background: @wisteria;
+  border: none;
+  color: white;
+}
+
+.black {
+  background: #181818;
+  border: none;
+  color: white;
+}
+
+a {
+  cursor: pointer;
 }
 
 @import "pages/_events";

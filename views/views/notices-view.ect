@@ -1,40 +1,146 @@
+<script type="text/ng-template" id="modalContent.html">
+    <div class="modal-header">
+        <h4 class="modal-title">Add notice</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6" class="form-horizontal">
+                <div class="form-group">
+                    <label for="body-input">Content:</label>
+                    <textarea type="text" id="body-input" class="form-control"
+                              ng-model="newNotice.body" rows="5"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <div class="btn-group" id="is-published-input">
+                        <button type="button" class="btn btn-default" ng-model="newNotice.published" btn-radio="true">Yes</button>
+                        <button type="button" class="btn btn-default" ng-model="newNotice.published" btn-radio="false">No</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="priority-id-input">Priority:</label>
+                    <input type="text" id="priority-id-input" class="form-control"
+                           ng-model="newNotice.priority">
+                </div>
+
+                <div class="form-group">
+                    <label for="style-id-input">Color:</label>
+                    <select ng-model="newNotice.style" id="style-id-input" class="form-control">
+                        <option value="" selected></option>
+                        <option value="red" >red</option>
+                        <option value="black">black</option>
+                        <option value="orange">orange</option>
+                        <option value="green">green</option>
+                        <option value="wisteria">wisteria</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="show_ends-id-input" >Дата окончания:</label>
+                    <div class="col-sm-10">
+                        <input ui-date="dateOptions"
+                                class="form-control"
+                                id="show_ends-id-input"
+                                placeholder="Дата"
+                                ng-model="newNotice.show_ends">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-6">
+                <!--  ==PREVIEW==      -->
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                <section class="note" ng-class="newNotice.style" ng-bind-html="newNotice.body">
+                    {{newNotice.body}}
+                </section>
+                </div>
+                </div>
+                <a ng-init="previewHidden=true;" ng-click="previewHidden=!previewHidden">Raw view>></a>
+                <pre ng-hide="previewHidden">{{noticeJSON}}</pre>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()">Сохранить</button>
+        <button class="btn btn-warning" ng-click="cancel()">Отмена</button>
+    </div>
+</script>
+
 <script type="text/ng-template" id="notices-view">
-  
-  <div ng-controller="NoticeEditorCtrl">
-    <div class="row">
-      <div class="col-sm-5">
-        <button type="button" class="btn btn-default" ng-click="create()">Новое объявление</button>
-      </div>
-      <div class="col-sm-7">
-        <button type="button" class="btn btn-default" ng-click="saveCurrent()">Сохранить</button>
-        <button type="button" class="btn btn-danger" ng-click="deleteCurrent()">Удалить</button>
-      </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <p>
+                    <button class="btn btn-primary text-center" ng-click="onEditOrAdd()">+Add notice</button>
+                    <div class="text-info small">На сайте отображаются только те объявления,
+                    которые имеют значение "Опубликовано" - Да и поле "Завершается" у которых позднее текущей даты</div>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <p>Поиск: <input type="text" ng-model="query">
+                    Сортировать по:
+                    <select ng-model="orderProp" >
+                        <option value="body">Содержимому</option>
+                        <option value="priority">Приоритету</option>
+                        <option value="published">Опубликовано</option>
+                        <option value="show_begins">Создано</option>
+                        <option value="show_ends">Завершается</option>
+                    </select>
+                    <a ng-init="orderDir=false" ng-click="orderDir=!orderDir">↑ ↓</a>
+                    <a ng-init="activeHiden=false" ng-click="activeHiden=!activeHiden">только на сайте\все объявления</a>
+                </p>
+                <table class="table table-hover table-condensed table-data">
+                    <tr>
+                        <th>#</th>
+                        <th ng-click="orderProp='body';orderDir=!orderDir;">Содержимое</th>
+                        <th ng-click="orderProp='priority';orderDir=!orderDir;">Приоритет</th>
+                        <th ng-click="orderProp='published';orderDir=!orderDir;">Опубликовано</th>
+                        <th ng-click="orderProp='show_begins';orderDir=!orderDir;">Создано</th>
+                        <th ng-click="orderProp='show_ends';orderDir=!orderDir;">Завершается</th>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="notice in notices | filter:query | filter:isHiden | orderBy:orderProp:orderDir" >
+                        <td>{{$index+1}}</td>
+                        <td ng-bind-html="notice.body" class="{{notice.style}}"></td>
+                        <td>{{notice.priority}}</td>
+                        <td>{{notice.published | isShowed}}</td>
+                        <td>{{notice.show_begins | date:'dd.MM.yyyy'}}</td>
+                        <td>{{notice.show_ends | date:'dd.MM.yyyy'}}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-warning" ng-click="onEditOrAdd($index, notice)">
+                                    Edit
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="onDelete($index, notice)">
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
     </div>
-
-    <br>
-
-    <div class="row">
-      <div class="col-sm-5">
-          <p>Поиск: <input type="text" ng-model="query">
-              Сортировать по:
-              <select ng-model="orderProp" >
-                  <option value="body">Содержимому</option>
-              </select>
-              <a ng-init="orderDir=false" ng-click="orderDir=!orderDir">↑ ↓</a>
-          </p>
-
-          <ul class="list-group notices-list">
-          <li class="list-group-item" ng-class="{active: notice._id == data.current._id, showed: notice.isShowed == true}"
-              ng-repeat="notice in data.noticesArr | filter:query | orderBy:orderProp:orderDir" ng-click="select(notice)">
-            {{notice.body}}
-          </li>
-        </ul>
-      </div>
-      <div class="col-sm-7">
-      <!-- <ui-codemirror class="form-control CodeMirror jsonedit2" ui-codemirror-opts="cmOptions" ng-model="data.currentJSON"></ui-codemirror> -->
-      <textarea class="form-control jsonedit" ng-model="data.currentJSON"></textarea>
-      </div>
-    </div>
-  </div>
 
 </script>
