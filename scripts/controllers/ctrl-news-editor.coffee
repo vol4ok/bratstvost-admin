@@ -1,101 +1,75 @@
-class NewsEditorCtrl
+angular.module('appLibs').controller "NewsEditorCtrl", ($scope, $newsSvc, $core, $modal) ->
 
-  _save: (news) =>
-    @$scope.data.isNew = yes unless news._id
-    news._id ?= uuid.v4()
-    news.updated ?= moment().toISOString()
-    news.created ?= moment().toISOString()
-    news.type ?= "news"
-    console.log "_save", news
-    if @$scope.data.isNew
-      @$newsSvc.create(news).then (resp) =>
-        console.log resp
-      @$scope.data.isNew = no
+  $newsSvc.all().then (news) ->
+    $scope.news = news
+
+  alerts = $scope.alerts = []
+  $scope.isHiden = (news) ->
+    if news.published or $scope.activeHiden
+      return true
     else
-      @$newsSvc.save(news._id, news).then (resp) =>
-        console.log resp
-    @$scope.data.newsList[news._id] = news;
-    @_updateNewsArray()
+      return false
 
+  $scope.onDelete = (index, aNew) ->
+    console.log("onDelete", index, aNew)
+    if confirm("Delete news?")
+      _.remove $scope.news, (n) -> n._id == aNew._id
+      $newsSvc.delete(aNew._id).then ->
+        alerts.push({type: "danger", msg: "Deleted!"})
 
-  select: (news) =>
-    @$scope.data.isNew = no
-    @$scope.data.current = news
+  $scope.onEditOrAdd = (index, news) ->
+    editMode = if news then true else false
+    console.log("onEditOrAdd", index, news)
 
-  create: =>
-    @$scope.data.isNew = yes
-    @$scope.data.current = 
-      _id: uuid.v4()
-      type: "news"
-      date: moment().toISOString()
-      body: ""
-      published: yes
-      created: moment().toISOString()
-      updated: moment().toISOString()
+    modalInstance = $modal.open
+      templateUrl: 'newsModalContent.html'
+      controller: ($scope, $modalInstance) ->
 
+        if editMode
+          $scope.newNews = angular.copy(news)
+        else
+          $scope.newNews = {
+            type: "news"
+            body: "<p>Описание...<a href=\"https://www.adoberevel.com/shares/e7f7eabd3da14f56aff7f33cc7f3649f\" target=\"_blank\" class=\"btn btn-info btn-sm more\">Фото →</a> <a href=\"https://www.youtube.com/watch?v=NBONP440yyA\" target=\"_blank\" class=\"btn btn-info btn-sm more\">Видео →</a> <a href=\"http://blog.bratstvost.by/post/84320352964\" target=\"_blank\" class=\"btn btn-info btn-sm more\">Читать →</a></p>"
+            date: moment().toISOString()
+            published: yes
+            created: moment().toISOString()
+            updated: moment().toISOString()
+          }
 
-  deleteCurrent: =>
-    if confirm("Точно удалить?")
-      @$newsSvc.delete(@$scope.data.current._id).then (resp) =>
-        # console.log resp
-      delete @$scope.data.newsList[@$scope.data.current._id]
-      @_updateNewsArray()
-      @$scope.data.current = @$scope.data.newsArr[0]
+        getNewsObj = (newNews) ->
+          news = angular.copy(newNews)
+          news.body = newNews.body.trim()
+          news.updated = new Date
 
-  saveCurrent: =>
-    if angular.isArray(@$scope.data.current)
-      last = null
-      @$scope.data.isNew = yes
-      for news in @$scope.data.current
-        @_save(news)
-        last = news
-      @$scope.data.current = last
-    else
-      @_save(@$scope.data.current)
+          return news
 
+        $scope.newsJSON = JSON.stringify(getNewsObj($scope.newNews), null, "  ")
 
-  _updateNewsArray: =>
-    result = []
-    for k,v of @$scope.data.newsList
-      result.push(v)
-    result.sort (a,b) -> moment(b.date).valueOf() - moment(a.date).valueOf()
-    @$scope.data.newsArr = result
+        $scope.$watchCollection "newNews", ->
+          $scope.newsObj = getNewsObj($scope.newNews)
+          $scope.newsJSON = JSON.stringify($scope.newsObj, null, "  ")
 
+        $scope.save = ->
+          result = getNewsObj($scope.newNews)
+          console.log "SAVE NEWS", result
+          $modalInstance.close(result)
 
-  constructor: (@$scope, @$newsSvc, @$http) ->
-    @$scope.data = {}
+        $scope.cancel = ->
+          $modalInstance.dismiss('cancel')
 
-    @$scope.select = @select
-    @$scope.create = @create
-    @$scope.saveCurrent = @saveCurrent
-    @$scope.deleteCurrent = @deleteCurrent
-    @$scope.cmOptions = 
-      lineNumbers: yes
-      lineWrapping: yes
-      mode: "application/json"
-      theme: "tomorrow-night-eighties"
-      tabSize: 2
-
-    @$newsSvc.all().then (newsList) => 
-      currentDate = moment() 
-      @$scope.data.newsList = {}
-      for news in newsList
-        @$scope.data.newsList[news._id] = news
-      @_updateNewsArray()
-
-    @$scope.$watch "data.current._id", (value) =>
-      # console.log 'news: $watch "data.current._id"'
-      return if angular.isArray(@$scope.data.current)
-      @$scope.data.currentJSON = JSON.stringify(@$scope.data.current, null, "  ")
-
-    @$scope.$watch "data.currentJSON", =>
-      return unless @$scope.data.currentJSON
-      # console.log 'news: $watch "data.currentJSON"'
-      try
-        @$scope.data.current = JSON.parse(@$scope.data.currentJSON)
-      catch e
-        @$scope.data.jsonErrorMessage = e.message
-        # console.log ">> jsonErrorMessage", @$scope.data.jsonErrorMessage
-
-angular.module("NewsEditorCtrl", ["NewsSvc"])
-  .controller("NewsEditorCtrl", ["$scope", "NewsSvc", "$http", NewsEditorCtrl])
+    .result.then (aNews) ->
+      if editMode
+        index = _.findIndex $scope.news, (news) ->
+          return news._id == aNews._id
+        console.log("CHECK", index, $scope.news, $scope.news[index], aNews)
+        $scope.news[index] = aNews
+        $newsSvc.save(aNews._id, aNews).then ->
+          alerts.push({type: "warning", msg: "updated!"})
+      else
+        $scope.news.push(aNews)
+        $newsSvc.create(aNews).then (d) ->
+          aNews._id = d._id
+          alerts.push({type: "success", msg: "Added!"})
+    , ->
+      console.log "Modal dismissed"

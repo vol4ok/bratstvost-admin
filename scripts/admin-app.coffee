@@ -15,6 +15,7 @@ configure = ($routeProvider, $locationProvider, $httpProvider) ->
     #   controller: "EventEditor2Ctrl"
     .when "/news",
       templateUrl: "news-view"
+      controller: "NewsEditorCtrl"
     .when "/notices",
       templateUrl: "notices-view"
       controller: "NoticeEditorCtrl"
@@ -37,13 +38,13 @@ angular.module('adminApp.filters', []).filter('isShowed', ->
 
 angular.module('adminApp.ctrl', [
   "EventEditorCtrl"
-  "NewsEditorCtrl"
+#  "NewsEditorCtrl"
 ])
 
 angular.module('adminApp.svc', [
   "EventsSvc"
 #  "NoticeSvc"
-  "NewsSvc"
+#  "NewsSvc"
 ])
 
 angular.module('adminApp', [

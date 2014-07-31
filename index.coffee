@@ -182,7 +182,7 @@ app.post "/api/news", restrict, (req, res) ->
   console.log "POST".cyan, "/api/news", req.body
   News.create req.body, (err, result) ->
     return res.json(status: "ERR", message: err) if err
-    res.json(status: "OK")
+    res.json(status: "OK", _id: result._id)
 
 app.put "/api/news/:id", restrict, (req, res) ->
   console.log "PUT".magenta, "/api/news/:id", req.params, req.body
