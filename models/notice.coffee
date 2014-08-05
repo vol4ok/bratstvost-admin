@@ -2,6 +2,7 @@ mg = require "mongoose"
 {Schema} = mg
 
 NoticeSchema = new Schema
+  _id: String
   type: { type: String, default: "notice" }
   body: String
   show_begins: { type: Date, default: Date.now }

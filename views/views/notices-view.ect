@@ -98,14 +98,14 @@
             <div class="col-sm-12">
                 <p>Поиск: <input type="text" ng-model="query">
                     Сортировать по:
-                    <select ng-model="orderProp" >
+                    <select ng-model="orderProp" ng-init="orderProp = 'priority'">
                         <option value="body">Содержимому</option>
-                        <option value="priority">Приоритету</option>
+                        <option value="priority" selected>Приоритету</option>
                         <option value="published">Опубликовано</option>
                         <option value="show_begins">Создано</option>
                         <option value="show_ends">Завершается</option>
                     </select>
-                    <a ng-init="orderDir=false" ng-click="orderDir=!orderDir">↑ ↓</a>
+                    <a ng-init="orderDir=true" ng-click="orderDir=!orderDir">↑ ↓</a>
                     <a ng-init="activeHiden=false" ng-click="activeHiden=!activeHiden">только на сайте\все объявления</a>
                 </p>
                 <table class="table table-hover table-condensed table-data">
