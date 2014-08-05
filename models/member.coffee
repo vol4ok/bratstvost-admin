@@ -16,6 +16,7 @@ MemberSchema = new Schema
   email: String
   skype: String
   info: String
+  active: { type: Boolean, default: yes }
   created: { type: Date, default: Date.now }
   updated: { type: Date, default: Date.now }
 

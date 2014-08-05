@@ -146,6 +146,14 @@
                  class="form-control"
                  ng-model="newMember.info"></textarea>
         </div>
+
+          <div class="form-group">
+              <div class="btn-group" id="is-active-input">
+                  <button type="button" class="btn btn-default" ng-model="newMember.active" btn-radio="true">Active</button>
+                  <button type="button" class="btn btn-default" ng-model="newMember.active" btn-radio="false">Inactive</button>
+              </div>
+          </div>
+
       </div>
 
         <div class="col-sm-6">
@@ -209,6 +217,7 @@
                 <option value="email">Почта</option>
             </select>
             <a ng-init="orderDir=false" ng-click="orderDir=!orderDir">↑ ↓</a>
+            <a ng-init="activeHiden=false" ng-click="activeHiden=!activeHiden">только актуальные\все братчики</a>
         </p>
         <table class="table table-hover table-condensed table-data">
         <tr>
@@ -219,7 +228,7 @@
           <th ng-click="orderProp='email';orderDir=!orderDir;">Email</th>
           <th></th>
         </tr>
-        <tr ng-repeat="memb in members | filter:query | orderBy:orderProp:orderDir">
+        <tr ng-repeat="memb in members | filter:query | filter:isHiden | orderBy:orderProp:orderDir">
           <td>{{$index+1}}</td>
           <td><strong>{{memb.lastName}}</strong> {{memb.firstName}}</td>
           <td ng-bind-html="memb.position"></td>

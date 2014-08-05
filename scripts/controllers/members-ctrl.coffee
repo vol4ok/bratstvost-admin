@@ -15,6 +15,12 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
 
     alerts = $scope.alerts = []
 
+    $scope.isHiden = (member) ->
+      if member.active or $scope.activeHiden
+        return true
+      else
+        return false
+
     $scope.onDelete = (index, member) ->
       console.log("onDelete", index, member)
       if confirm("Delete #{member.fullName}?")
@@ -44,7 +50,8 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
                phone: ''
                email: ''
                skype: ''
-               info: '' }
+               info: ''
+               active: yes }
 
           getMemberObj = (newMember) ->
             if editMode
@@ -65,6 +72,7 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
             member.skype = newMember.skype.trim()
             member.info = FSM(newMember.info)
             member.phone = phoneHelpers.formatPhoneRaw(newMember.phone)
+            member.active = !!newMember.active
             member.updated = new Date
 
             return member
