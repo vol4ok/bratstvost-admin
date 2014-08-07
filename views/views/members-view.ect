@@ -105,6 +105,14 @@
         </div>
 
         <div class="form-group">
+          <label for="orderNumber-input">Order number:</label>
+          <input type="text"
+                 id="orderNumber-input"
+                 class="form-control"
+                 ng-model="newMember.orderNumber">
+        </div>
+
+        <div class="form-group">
           <label for="photo-id-input">PhotoID:</label>
           <input type="text" 
                  id="photo-id-input" 
@@ -210,11 +218,12 @@
     <div class="col-sm-12">
         <p>Поиск: <input type="text" ng-model="query">
             Сортировать по:
-            <select ng-model="orderProp" >
+            <select ng-model="orderProp" ng-init="orderProp = 'orderNumber'">
                 <option value="fullName" selected>ФИО</option>
                 <option value="position">Должность</option>
                 <option value="phone">Телефон</option>
                 <option value="email">Почта</option>
+                <option value="orderNumber" selected>Порядковый номер</option>
             </select>
             <a ng-init="orderDir=false" ng-click="orderDir=!orderDir">↑ ↓</a>
             <a ng-init="activeHiden=false" ng-click="activeHiden=!activeHiden">только актуальные\все братчики</a>
@@ -226,6 +235,7 @@
           <th ng-click="orderProp='position';orderDir=!orderDir;">Position</th>
           <th ng-click="orderProp='phone';orderDir=!orderDir;">Phone</th>
           <th ng-click="orderProp='email';orderDir=!orderDir;">Email</th>
+          <th ng-click="orderProp='orderNumber';orderDir=!orderDir;">Order</th>
           <th></th>
         </tr>
         <tr ng-repeat="memb in members | filter:query | filter:isHiden | orderBy:orderProp:orderDir">
@@ -234,6 +244,7 @@
           <td ng-bind-html="memb.position"></td>
           <td>{{memb.phone}}</td>
           <td>{{memb.email}}</td>
+          <td>{{memb.orderNumber}}</td>
           <td>
             <div class="btn-group btn-group-sm">
               <button type="button" class="btn btn-warning" ng-click="onEditOrAdd($index, memb)">

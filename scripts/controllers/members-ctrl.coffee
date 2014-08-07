@@ -51,7 +51,8 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
                email: ''
                skype: ''
                info: ''
-               active: yes }
+               active: yes
+              orderNumber: 10 }
 
           getMemberObj = (newMember) ->
             if editMode
@@ -73,6 +74,7 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
             member.info = FSM(newMember.info)
             member.phone = phoneHelpers.formatPhoneRaw(newMember.phone)
             member.active = !!newMember.active
+            member.orderNumber = newMember.orderNumber
             member.updated = new Date
 
             return member
