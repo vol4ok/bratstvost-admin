@@ -52,7 +52,7 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
                skype: ''
                info: ''
                active: yes
-              orderNumber: 10 }
+              orderNumber: 50 }
 
           getMemberObj = (newMember) ->
             if editMode
