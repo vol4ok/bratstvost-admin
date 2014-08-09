@@ -2,7 +2,6 @@ mg = require "mongoose"
 {Schema} = mg
 
 MemberSchema = new Schema
-  _id: String
   fullName: { type: String, trim: true }
   lastName: { type: String, trim: true }
   firstName: { type: String, trim: true }

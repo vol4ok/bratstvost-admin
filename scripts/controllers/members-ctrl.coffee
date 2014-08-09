@@ -60,7 +60,7 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
             else
               member = { created : new Date }
 
-            member.fullName ?= filterText(newMember.fullName).trim()
+            member.fullName = newMember.fullName.trim()
             names = member.fullName.split(" ")
             member.lastName = newMember.lastName || names[0] || ""
             member.firstName = newMember.firstName || names[1] || ""
@@ -72,7 +72,7 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
             member.email = newMember.email.trim()
             member.skype = newMember.skype.trim()
             member.info = FSM(newMember.info)
-            member.phone = phoneHelpers.formatPhoneRaw(newMember.phone)
+            member.phone = newMember.phone
             member.active = !!newMember.active
             member.orderNumber = newMember.orderNumber
             member.updated = new Date
