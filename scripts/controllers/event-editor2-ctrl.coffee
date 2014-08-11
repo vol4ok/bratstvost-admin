@@ -29,7 +29,7 @@ angular.module('appLibs').controller "EventEditor2Ctrl", ($scope, $core, uuid4, 
 
     $scope.saveEvent = ->
       $core.$events.create($scope.event).then ->
-        $scope.alerts.push({type: "success", msg: "Added!"})
+        $scope.alerts.push({type: "success", msg: "Добавлено!"})
 
     getEvent = (newEvent) ->
       event = angular.copy(newEvent)

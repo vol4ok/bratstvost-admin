@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="myModalContent.html">
   <div class="modal-header">
-    <h4 class="modal-title">Add member</h4>
+    <h4 class="modal-title">Добавить братчика</h4>
   </div>
   <div class="modal-body">
     <div class="row">
@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-sm-6" class="form-horizontal">
         <div class="form-group">
-          <label for="full-name-input">Full name:</label>
+          <label for="full-name-input">ФИО:</label>
           <input type="text" 
                  id="full-name-input" 
                  class="form-control"
@@ -19,7 +19,7 @@
         </div>
 
         <div class="form-group">
-          <label>Last name:</label>
+          <label>Фамилия:</label>
           <div class="input-group">
             <div class="input-group-addon">
               <input type="checkbox"
@@ -42,7 +42,7 @@
         </div>
 
         <div class="form-group">
-          <label>First name:</label>
+          <label>Имя:</label>
           <div class="input-group">
             <div class="input-group-addon">
               <input type="checkbox"
@@ -65,7 +65,7 @@
         </div>
 
         <div class="form-group">
-          <label>Middle name:</label>
+          <label>Отчество:</label>
           <div class="input-group">
             <div class="input-group-addon">
               <input type="checkbox"
@@ -89,15 +89,15 @@
 
         <div class="form-group">
           <div class="btn-group" id="is-male-input">
-              <button type="button" class="btn btn-default" ng-model="newMember.male" btn-radio="true">Male</button>
-              <button type="button" class="btn btn-default" ng-model="newMember.male" btn-radio="false">Female</button>
+              <button type="button" class="btn btn-default" ng-model="newMember.male" btn-radio="true">Мужчина</button>
+              <button type="button" class="btn btn-default" ng-model="newMember.male" btn-radio="false">Женщина</button>
           </div>
         </div>
 
         
 
         <div class="form-group">
-          <label for="position-input">Position:</label>
+          <label for="position-input">Должность:</label>
           <input type="text" 
                  id="position-input" 
                  class="form-control"
@@ -105,7 +105,7 @@
         </div>
 
         <div class="form-group">
-          <label for="orderNumber-input">Order number:</label>
+          <label for="orderNumber-input">Порядковый номер на сайте:</label>
           <input type="text"
                  id="orderNumber-input"
                  class="form-control"
@@ -113,7 +113,7 @@
         </div>
 
         <div class="form-group">
-          <label for="photo-id-input">PhotoID:</label>
+          <label for="photo-id-input">Ид фотографии(цифра 1-42):</label>
           <input type="text" 
                  id="photo-id-input" 
                  class="form-control"
@@ -121,7 +121,7 @@
         </div>
 
         <div class="form-group">
-          <label for="phone-input">Phone:</label>
+          <label for="phone-input">Телефон:</label>
           <input type="text" 
                  id="phone-input" 
                  class="form-control"
@@ -129,7 +129,7 @@
         </div>
 
         <div class="form-group">
-          <label for="email-input">Email:</label>          
+          <label for="email-input">Почта:</label>
           <div class="input-group">
             <span class="input-group-addon">@</span>
             <input type="text" 
@@ -140,7 +140,7 @@
         </div>
 
         <div class="form-group">
-          <label for="skype-input">Skype:</label>
+          <label for="skype-input">Скайп:</label>
           <input type="text" 
                  id="skype-input" 
                  class="form-control"
@@ -148,7 +148,7 @@
         </div>
 
         <div class="form-group">
-          <label for="info-input">Info:</label>
+          <label for="info-input">Описание:</label>
           <textarea type="text" 
                  id="info-input" 
                  class="form-control"
@@ -157,8 +157,8 @@
 
           <div class="form-group">
               <div class="btn-group" id="is-active-input">
-                  <button type="button" class="btn btn-default" ng-model="newMember.active" btn-radio="true">Active</button>
-                  <button type="button" class="btn btn-default" ng-model="newMember.active" btn-radio="false">Inactive</button>
+                  <button type="button" class="btn btn-default" ng-model="newMember.active" btn-radio="true">Действующий</button>
+                  <button type="button" class="btn btn-default" ng-model="newMember.active" btn-radio="false">Неактивный(не отображается на сайте)</button>
               </div>
           </div>
 
@@ -209,7 +209,7 @@
   <div class="row">
     <div class="col-sm-12">
       <p>
-        <button class="btn btn-primary" ng-click="onEditOrAdd()">+Add member</button>
+        <button class="btn btn-primary" ng-click="onEditOrAdd()">+Добавить братчика</button>
       </p>
     </div>
   </div>
@@ -231,11 +231,11 @@
         <table class="table table-hover table-condensed table-data">
         <tr>
           <th>#</th>
-          <th ng-click="orderProp='fullName';orderDir=!orderDir;">Name</th>
-          <th ng-click="orderProp='position';orderDir=!orderDir;">Position</th>
-          <th ng-click="orderProp='phone';orderDir=!orderDir;">Phone</th>
-          <th ng-click="orderProp='email';orderDir=!orderDir;">Email</th>
-          <th ng-click="orderProp='orderNumber';orderDir=!orderDir;">Order</th>
+          <th ng-click="orderProp='fullName';orderDir=!orderDir;">Имя</th>
+          <th ng-click="orderProp='position';orderDir=!orderDir;">Должность</th>
+          <th ng-click="orderProp='phone';orderDir=!orderDir;">Телефон</th>
+          <th ng-click="orderProp='email';orderDir=!orderDir;">Почта</th>
+          <th ng-click="orderProp='orderNumber';orderDir=!orderDir;">Порядок</th>
           <th></th>
         </tr>
         <tr ng-repeat="memb in members | filter:query | filter:isHiden | orderBy:orderProp:orderDir">
@@ -248,10 +248,10 @@
           <td>
             <div class="btn-group btn-group-sm">
               <button type="button" class="btn btn-warning" ng-click="onEditOrAdd($index, memb)">
-                Edit
+                Редактировать
               </button>
               <button type="button" class="btn btn-danger" ng-click="onDelete($index, memb)">
-                Delete
+                Удалить
               </button>
             </div>
           </td>

@@ -14,10 +14,10 @@ angular.module('appLibs').controller "NoticeEditorCtrl", ($scope, $noticeSvc, $c
 
   $scope.onDelete = (index, notice) ->
     console.log("onDelete", index, notice)
-    if confirm("Delete notice?")
+    if confirm("Удалить объявление?")
       _.remove $scope.notices, (note) -> note._id == notice._id
       $noticeSvc.delete(notice._id).then ->
-        alerts.push({type: "danger", msg: "Deleted!"})
+        alerts.push({type: "danger", msg: "Удалено!"})
 
   $scope.onEditOrAdd = (index, note) ->
     editMode = if note then true else false
@@ -70,11 +70,11 @@ angular.module('appLibs').controller "NoticeEditorCtrl", ($scope, $noticeSvc, $c
         console.log("CHECK", index, $scope.notices, $scope.notices[index], notice)
         $scope.notices[index] = notice
         $noticeSvc.save(notice._id, notice).then ->
-          alerts.push({type: "warning", msg: "updated!"})
+          alerts.push({type: "warning", msg: "Обновлено!"})
       else
         $scope.notices.push(notice)
         $noticeSvc.create(notice).then (d) ->
           notice._id = d._id
-          alerts.push({type: "success", msg: "Added!"})
+          alerts.push({type: "success", msg: "Добавлено!"})
     , ->
       console.log "Modal dismissed"

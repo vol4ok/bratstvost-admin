@@ -14,10 +14,10 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
 
   $scope.onDelete = (index, event) ->
     console.log("onDelete", index, event)
-    if confirm("Delete event?")
+    if confirm("Удалить событие?")
       _.remove $scope.events, (note) -> note._id == event._id
       $eventsSvc.delete(event._id).then ->
-        alerts.push({type: "danger", msg: "Deleted!"})
+        alerts.push({type: "danger", msg: "Удалено!"})
 
   $scope.onEditOrAdd = (index, event) ->
     editMode = if event then true else false
@@ -81,11 +81,11 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
         console.log("CHECK", index, $scope.events, $scope.events[index], event)
         $scope.events[index] = event
         $eventsSvc.save(event._id, event).then ->
-          alerts.push({type: "warning", msg: "updated!"})
+          alerts.push({type: "warning", msg: "Обновлено!"})
       else
         $scope.events.push(event)
         $eventsSvc.create(event).then (d) ->
           event._id = d._id
-          alerts.push({type: "success", msg: "Added!"})
+          alerts.push({type: "success", msg: "Добавлено!"})
     , ->
       console.log "Modal dismissed"

@@ -23,10 +23,10 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
 
     $scope.onDelete = (index, member) ->
       console.log("onDelete", index, member)
-      if confirm("Delete #{member.fullName}?")
+      if confirm("Удалить #{member.fullName}?")
         _.remove $scope.members, (memb) -> memb._id == member._id
         $core.$members.delete(member._id).then ->
-          alerts.push({type: "danger", msg: "Deleted!"})
+          alerts.push({type: "danger", msg: "Удалено!"})
 
     $scope.onEditOrAdd = (index, memb) ->
       editMode = if memb then true else false
@@ -100,11 +100,11 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
           console.log("CHECK", index, $scope.members, $scope.members[index], member)
           $scope.members[index] = member
           $core.$members.save(member).then ->
-            alerts.push({type: "warning", msg: "updated!"})
+            alerts.push({type: "warning", msg: "Обновлено!"})
         else
           $scope.members.push(member)
           $core.$members.create(member).then (d) ->
             member._id = d._id
-            alerts.push({type: "success", msg: "Added!"})
+            alerts.push({type: "success", msg: "Добавлено!"})
       , ->
         console.log "Modal dismissed"

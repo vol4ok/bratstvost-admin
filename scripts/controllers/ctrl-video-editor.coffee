@@ -14,10 +14,10 @@ angular.module('appLibs').controller "VideoEditorCtrl", ($scope, $videoSvc, $cor
 
   $scope.onDelete = (index, video) ->
     console.log("onDelete", index, video)
-    if confirm("Delete video?")
+    if confirm("Удалить видео?")
       _.remove $scope.videos, (vid) -> vid._id == video._id
       $videoSvc.delete(video._id).then ->
-        alerts.push({type: "danger", msg: "Deleted!"})
+        alerts.push({type: "danger", msg: "Удалено!"})
 
   $scope.onEditOrAdd = (index, cVideo) ->
     editMode = if cVideo then true else false
@@ -70,11 +70,11 @@ angular.module('appLibs').controller "VideoEditorCtrl", ($scope, $videoSvc, $cor
         console.log("CHECK", index, $scope.videos, $scope.videos[index], video)
         $scope.videos[index] = video
         $videoSvc.save(video._id, video).then ->
-          alerts.push({type: "warning", msg: "updated!"})
+          alerts.push({type: "warning", msg: "Обновлено!"})
       else
         $scope.videos.push(video)
         $videoSvc.create(video).then (d) ->
           video._id = d._id
-          alerts.push({type: "success", msg: "Added!"})
+          alerts.push({type: "success", msg: "Добавлено!"})
     , ->
       console.log "Modal dismissed"

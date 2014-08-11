@@ -12,10 +12,10 @@ angular.module('appLibs').controller "NewsEditorCtrl", ($scope, $newsSvc, $core,
 
   $scope.onDelete = (index, aNew) ->
     console.log("onDelete", index, aNew)
-    if confirm("Delete news?")
+    if confirm("Удалить новость?")
       _.remove $scope.news, (n) -> n._id == aNew._id
       $newsSvc.delete(aNew._id).then ->
-        alerts.push({type: "danger", msg: "Deleted!"})
+        alerts.push({type: "danger", msg: "Удалено!"})
 
   $scope.onEditOrAdd = (index, news) ->
     editMode = if news then true else false
@@ -65,11 +65,11 @@ angular.module('appLibs').controller "NewsEditorCtrl", ($scope, $newsSvc, $core,
         console.log("CHECK", index, $scope.news, $scope.news[index], aNews)
         $scope.news[index] = aNews
         $newsSvc.save(aNews._id, aNews).then ->
-          alerts.push({type: "warning", msg: "updated!"})
+          alerts.push({type: "warning", msg: "Обновлено!"})
       else
         $scope.news.push(aNews)
         $newsSvc.create(aNews).then (d) ->
           aNews._id = d._id
-          alerts.push({type: "success", msg: "Added!"})
+          alerts.push({type: "success", msg: "Добавлено!"})
     , ->
       console.log "Modal dismissed"
