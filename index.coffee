@@ -126,7 +126,7 @@ app.post "/api/events", restrict, (req, res) ->
   console.log "POST".green, "/api/events", req.body
   Event.create req.body, (err, result) ->
     return res.json(status: "ERR", message: err) if err
-    res.json(status: "OK")
+    res.json(status: "OK", _id: result._id)
 
 app.put "/api/events/:id", restrict, (req, res) ->
   # id = req.body._id
@@ -237,7 +237,7 @@ app.post "/api/video", restrict, (req, res) ->
   console.log "POST".cyan, "/api/video", req.body
   Video.create req.body, (err, result) ->
     return res.json(status: "ERR", message: err) if err
-    res.json(status: "OK")
+    res.json(status: "OK", _id: result._id)
 
 app.put "/api/video/:id", restrict, (req, res) ->
   console.log "PUT".magenta, "/api/video/:id", req.params, req.body

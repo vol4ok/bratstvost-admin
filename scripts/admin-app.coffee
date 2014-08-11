@@ -10,9 +10,7 @@ configure = ($routeProvider, $locationProvider, $httpProvider) ->
       controller: "EventEditor2Ctrl"
     .when "/events",
       templateUrl: "events-view"
-    # .when "/events2",
-    #   templateUrl: "events2-view"
-    #   controller: "EventEditor2Ctrl"
+      controller: "EventEditorCtrl"
     .when "/news",
       templateUrl: "news-view"
       controller: "NewsEditorCtrl"
@@ -22,6 +20,9 @@ configure = ($routeProvider, $locationProvider, $httpProvider) ->
     .when "/members",
       templateUrl: "members-view"
       controller: "MembersCtrl"
+    .when "/videos",
+      templateUrl: "videos-view"
+      controller: "VideoEditorCtrl"
 
 
 main = () ->
@@ -36,17 +37,6 @@ angular.module('adminApp.filters', []).filter('isShowed', ->
       return 'Нет'
 )
 
-angular.module('adminApp.ctrl', [
-  "EventEditorCtrl"
-#  "NewsEditorCtrl"
-])
-
-angular.module('adminApp.svc', [
-  "EventsSvc"
-#  "NoticeSvc"
-#  "NewsSvc"
-])
-
 angular.module('adminApp', [
     'ngSanitize'
     'ngRoute'
@@ -58,8 +48,6 @@ angular.module('adminApp', [
     'ui.codemirror'
     'ui.bootstrap.tpls'
     'ui.bootstrap'
-    'adminApp.ctrl'
-    'adminApp.svc'
     'adminApp.filters'
   ])
   .config([ '$routeProvider', '$locationProvider', '$httpProvider', configure ])

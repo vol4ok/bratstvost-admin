@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <label for="body-input">Content:</label>
                     <textarea type="text" id="body-input" class="form-control"
-                              ng-model="newNews.body" rows="7"></textarea>
+                              ng-model="newNews.body" rows="11"></textarea>
                 </div>
 
                 <div class="form-group">
@@ -61,12 +61,12 @@
             <div class="col-sm-12">
                 <p>Поиск: <input type="text" ng-model="query">
                     Сортировать по:
-                    <select ng-model="orderProp" >
+                    <select ng-model="orderProp" ng-init="orderProp = 'date'">
                         <option value="body">Содержимому</option>
-                        <option value="date">Дате</option>
+                        <option value="date" selected>Дате</option>
                         <option value="published">Опубликовано</option>
                     </select>
-                    <a ng-init="orderDir=false" ng-click="orderDir=!orderDir">↑ ↓</a>
+                    <a ng-init="orderDir=true" ng-click="orderDir=!orderDir">↑ ↓</a>
                     <a ng-init="activeHiden=false" ng-click="activeHiden=!activeHiden">только на сайте\все новости</a>
                 </p>
                 <table class="table table-hover table-condensed table-data">

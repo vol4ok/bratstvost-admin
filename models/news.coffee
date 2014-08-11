@@ -2,7 +2,6 @@ mg = require "mongoose"
 {Schema} = mg
 
 NewsSchema = new Schema
-  _id: String
   type: { type: String, default: "news" }
   date: Date
   body: String

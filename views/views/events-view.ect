@@ -1,41 +1,304 @@
+<script type="text/ng-template" id="eventModalContent.html">
+<div class="modal-header">
+    <h4 class="modal-title">Add event</h4>
+</div>
+<div class="modal-body">
+<div class="row">
+    <div class="col-sm-12">
+        <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+    </div>
+</div>
+<div class="row">
+<div class="col-sm-6" class="form-horizontal">
+    <div class="form-group">
+        <label for="new-event-date">Дата события</label>
+        <div class="col-sm-10">
+            <input ui-date="dateOptions"
+                   class="form-control"
+                   id="new-event-date"
+                   placeholder="Дата"
+                   ng-model="newEvent.date">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="new-event-title">Название</label>
+
+        <div class="col-sm-10">
+            <input type="text"
+                   list="title-suggestions"
+                   class="form-control"
+                   id="new-event-title"
+                   placeholder="Название"
+                   ng-model="newEvent.title">
+
+            <datalist id="title-suggestions">
+                <option value="Выезд в ПНИ г. Молодечно">
+                <option value="Выезд в Борисовский ПНИ">
+                <option value="Выезд в Столбцовский ПНИ">
+                <option value="Выезд в ПНИ г.Червень">
+                <option value="Посещение ПНИ в Дражне">
+                <option value="Посещение ПНИ в г. Молодечно">
+                <option value="Собрание братства">
+            </datalist>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="new-event-body">Описание</label>
+
+        <div class="col-sm-10">
+            <textarea id="new-event-body" ng-model="newEvent.body" class="form-control" rows="3"
+                      placeholder="Описание"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="new-event-oraganizer">Организатор</label>
+
+        <div class="col-sm-10">
+            <input type="text"
+                   list="oraganizer-suggestions"
+                   class="form-control"
+                   id="new-event-oraganizer"
+                   placeholder="Организатор"
+                   ng-model="newEvent.organizer">
+
+            <datalist id="oraganizer-suggestions">
+                <option value="брат Сергий">
+                <option value="сестра Ангелина">
+                <option value="сестра Татьяна">
+                <option value="сестра Светлана">
+                <option value="сестра Мария">
+            </datalist>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="new-event-phone">Телефон:</label>
+
+        <div class="col-sm-10">
+            <input type="text"
+                   list="phone-suggestions"
+                   class="form-control"
+                   id="new-event-phone"
+                   placeholder="Телефон"
+                   ng-model="newEvent.phone">
+
+            <datalist id="phone-suggestions">
+                <option value="8 (029) 373-72-50">брат Сергий</option>
+                <option value="8 (029) 143-21-77">сестра Татьяна</option>
+                <option value="8 (029) 159-77-04">сестра Ангелина</option>
+                <option value="8 (029) 570-71-07">сестра Светлана</option>
+
+            </datalist>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="new-event-meetingtime">Время встречи</label>
+
+        <div class="col-sm-10">
+            <input type="text"
+                   list="meetingtime-suggestions"
+                   class="form-control"
+                   id="new-event-meetingtime"
+                   placeholder="Время встречи"
+                   ng-model="newEvent.meeting_time">
+
+            <datalist id="meetingtime-suggestions">
+                <option value="7:00">
+                <option value="8:00">
+                <option value="9:00">
+                <option value="10:00">
+                <option value="11:00">
+                <option value="12:00">
+                <option value="13:00">
+                <option value="14:00">
+                <option value="15:00">
+                <option value="16:00">
+                <option value="17:00">
+                <option value="18:00">
+                <option value="19:00">
+            </datalist>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="new-event-meetingplace">Место встречи</label>
+
+        <div class="col-sm-10">
+            <input type="text"
+                   list="meetingplace-suggestions"
+                   class="form-control"
+                   id="new-event-meetingplace"
+                   placeholder="Место встречи"
+                   ng-model="newEvent.meeting_place">
+
+            <datalist id="meetingplace-suggestions">
+                <option value="ст. м. Уручье">
+                <option value="ст. м. Каменная Горка">
+                <option value="ст. м. Петровщина">
+                <option value="ст. м. Могилевская">
+            </datalist>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="new-event-eventtime">Время события</label>
+
+        <div class="col-sm-10">
+            <input type="text"
+                   list="eventtime-suggestions"
+                   class="form-control"
+                   id="new-event-eventtime"
+                   placeholder="Время события"
+                   ng-model="newEvent.event_time">
+
+            <datalist id="eventtime-suggestions">
+                <option value="7:00">
+                <option value="8:00">
+                <option value="9:00">
+                <option value="10:00">
+                <option value="11:00">
+                <option value="12:00">
+                <option value="13:00">
+                <option value="14:00">
+                <option value="15:00">
+                <option value="16:00">
+                <option value="17:00">
+                <option value="18:00">
+                <option value="19:00">
+            </datalist>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="new-event-eventplace">Место события</label>
+
+        <div class="col-sm-10">
+            <input type="text"
+                   list="eventplace-suggestions"
+                   class="form-control"
+                   id="new-event-eventplace"
+                   placeholder="Место события"
+                   ng-model="newEvent.event_place">
+
+            <datalist id="eventplace-suggestions">
+                <option value="Офис Blue Sky Talent Company">
+                <option value="Приход в честь иконы Божией Матери «Всех скорбящих Радость»">
+                <option value="храм Преображения Господня, г. Заславль">
+                <option value="ул. Ваупшасова, д. 33">
+            </datalist>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="new-event-cakes">Выпечка:</label>
+
+        <div class="col-sm-10">
+            <input type="text"
+                   list="cakes-suggestions"
+                   class="form-control"
+                   id="new-event-cakes"
+                   placeholder="Пироги"
+                   ng-model="newEvent.cakes">
+
+            <datalist id="cakes-suggestions">
+                <option value="минские сестры">
+                <option value="заславские сестры">
+            </datalist>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="new-event-cost">Стоимось:</label>
+
+        <div class="col-sm-10">
+            <input type="text"
+                   class="form-control"
+                   id="new-event-cost"
+                   placeholder="Стоимость"
+                   ng-model="newEvent.cost">
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-6">
+    <!--  ==PREVIEW==      -->
+    <div class="event-preview">
+        <eventview event="newEvent"></eventview>
+    </div>
+    <a ng-init="previewHidden=true;" ng-click="previewHidden=!previewHidden">Raw view>></a>
+    <pre ng-hide="previewHidden">{{eventJSON}}</pre>
+
+</div>
+</div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save()">Сохранить</button>
+    <button class="btn btn-warning" ng-click="cancel()">Отмена</button>
+</div>
+</script>
+
 <script type="text/ng-template" id="events-view">
 
-  <div ng-controller="EventEditorCtrl">
-    <div class="row">
-      <div class="col-sm-5">
-        <button type="button" class="btn btn-default" ng-click="createEvent()">Новое событие</button>
-      </div>
-      <div class="col-sm-7">
-        <button type="button" class="btn btn-default" ng-click="saveCurrentEvent()">Сохранить</button>
-        <button type="button" class="btn btn-danger" ng-click="deleteCurrentEvent()">Удалить</button>
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-sm-5">
-          <p>Поиск: <input type="text" ng-model="query">
-          Сортировать по:
-          <select ng-model="orderProp" >
-              <option value="date" selected>Дате</option>
-              <option value="title">Заголовку</option>
-          </select>
-          <a ng-init="orderDir=false" ng-click="orderDir=!orderDir">↑ ↓</a>
-          </p>
-          <ul class="list-group event-list">
-            <li class="list-group-item" ng-class="{active: ev._id == data.currentEvent._id}"
-              ng-repeat="ev in data.eventsArr | filter:query | orderBy:orderProp:orderDir" ng-click="selectEvent(ev)" >
-            <div class="row">
-              <div class="col-sm-3">{{ev.date | date:'dd MMM'}}</div>
-              <div class="col-sm-9" ng-bind-html="ev.title">{{ev.title}}</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
             </div>
-          </li>
-        </ul>
-      </div>
-      <div class="col-sm-7">
-        <!-- <ui-codemirror class="form-control CodeMirror jsonedit2" ui-codemirror-opts="cmOptions" ng-model="data.currentEventJSON"></ui-codemirror> -->
-        <textarea class="form-control jsonedit" ng-model="data.currentEventJSON"></textarea>
-      </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <p>
+                    <button class="btn btn-primary text-center" ng-click="onEditOrAdd()">+Add event</button>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <p>Поиск: <input type="text" ng-model="query">
+                    Сортировать по:
+                    <select ng-model="orderProp" ng-init="orderProp = 'date'">
+                        <option value="date" selected>Дате</option>
+                        <option value="title">Заголовку</option>
+                        <option value="body">Содержимому</option>
+                    </select>
+                    <a ng-init="orderDir=true" ng-click="orderDir=!orderDir">↑ ↓</a>
+                    <a ng-init="activeHiden=false" ng-click="activeHiden=!activeHiden">только на сайте\все события</a>
+                </p>
+                <table class="table table-hover table-condensed table-data">
+                    <tr>
+                        <th>#</th>
+                        <th ng-click="orderProp='date';orderDir=!orderDir;">Дата</th>
+                        <th ng-click="orderProp='title';orderDir=!orderDir;">Заголовок</th>
+                        <th ng-click="orderProp='body';orderDir=!orderDir;">Содержимое</th>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="event in events | filter:query | filter:isHiden | orderBy:orderProp:orderDir">
+                        <td>{{$index+1}}</td>
+                        <td>{{event.date | date:'dd.MM.yyyy'}}</td>
+                        <td>{{event.title}}</td>
+                        <td ng-bind-html="event.body"></td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-warning" ng-click="onEditOrAdd($index, event)">
+                                    Edit
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="onDelete($index, event)">
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
     </div>
-  </div>
 
 </script>

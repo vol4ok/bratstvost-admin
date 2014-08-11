@@ -1,0 +1,167 @@
+<script type="text/ng-template" id="videoModalContent.html">
+    <div class="modal-header">
+        <h4 class="modal-title">Add video</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6" class="form-horizontal">
+                <div class="form-group">
+                    <label for="publish_date-input" >Дата публикации:</label>
+                    <div class="col-sm-10">
+                        <input ui-date="dateOptions"
+                               class="form-control"
+                               id="publish_date-input"
+                               placeholder="Дата публикации"
+                               ng-model="newVideo.publish_date">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="title-input">Заголовок:</label>
+                    <input type="text" id="title-input" class="form-control"
+                           ng-model="newVideo.title">
+                </div>
+
+                <div class="form-group">
+                    <label for="url-input">Ссылка:</label>
+                    <input type="text" id="url-input" class="form-control"
+                           ng-model="newVideo.url">
+                </div>
+
+                <div class="form-group">
+                    <label for="thumb_url-input">Обложка:</label>
+                    <input type="text" id="thumb_url-input" class="form-control"
+                           ng-model="newVideo.thumb_url">
+                </div>
+
+                <div class="form-group">
+                    <label for="content-input">Описание:</label>
+                    <textarea type="text" id="content-input" class="form-control"
+                              ng-model="newVideo.content" rows="5"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="video_id-input">Ид видео:</label>
+                    <input type="text" id="video_id-input" class="form-control"
+                           ng-model="newVideo.video_id">
+                </div>
+
+                <div class="form-group">
+                    <label for="source_url-input">Источнк:</label>
+                    <input type="text" id="source_url-input" class="form-control"
+                           ng-model="newVideo.source_url">
+                </div>
+                
+                <div class="form-group">
+                    <div class="btn-group" id="is-published-input">
+                        <button type="button" class="btn btn-default" ng-model="newVideo.published" btn-radio="true">Yes</button>
+                        <button type="button" class="btn btn-default" ng-model="newVideo.published" btn-radio="false">No</button>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="col-sm-6">
+                <!--  ==PREVIEW==  -->
+<!--
+                <div class="well video-well" ng-init="newVideo.preview=true" >
+                    <div class="video-wrap" ng-switch="video.preview">
+                        <div  ng-switch-when="false" class="video-player">
+                            <iframe width="100%" height="100%" src="{{newVideo.url}}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        </div>
+                        <div ng-switch-when="true" class="video-preview img" style="background-image: url('{{newVideo.thumb_url}}')" ng-click="newVideo.preview=false">
+                            <div class="video-title">{{newVideo.title}}</div>
+                        </div>
+                    </div>
+                </div>
+-->
+
+                <div class="well video-well">
+                    <div class="video-wrap">
+                        <div class="video-preview img" style="background-image: url('{{newVideo.thumb_url}}')">
+                            <div class="video-title">{{newVideo.title}}</div>
+                        </div>
+                    </div>
+                </div>
+                <a ng-init="previewHidden=true;" ng-click="previewHidden=!previewHidden">Raw view>></a>
+                <pre ng-hide="previewHidden">{{videoJSON}}</pre>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()">Сохранить</button>
+        <button class="btn btn-warning" ng-click="cancel()">Отмена</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="videos-view">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <p>
+                    <button class="btn btn-primary text-center" ng-click="onEditOrAdd()">+Add video</button>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <p>Поиск: <input type="text" ng-model="query">
+                    Сортировать по:
+                    <select ng-model="orderProp" ng-init="orderProp = 'publish_date'">
+                        <option value="publish_date" selected>Дата публикации</option>
+                        <option value="title" >Приоритету</option>
+                        <option value="url">Ссылка</option>
+                        <option value="thumb_url">Обложка</option>
+                    </select>
+                    <a ng-init="orderDir=true" ng-click="orderDir=!orderDir">↑ ↓</a>
+                    <a ng-init="activeHiden=false" ng-click="activeHiden=!activeHiden">только на сайте\все видео</a>
+                </p>
+                <table class="table table-hover table-condensed table-data">
+                    <tr>
+                        <th>#</th>
+                        <th ng-click="orderProp='publish_date';orderDir=!orderDir;">Дата публикации</th>
+                        <th ng-click="orderProp='title';orderDir=!orderDir;">Заголовок</th>
+                        <th ng-click="orderProp='url';orderDir=!orderDir;">Ссылка</th>
+                        <th ng-click="orderProp='thumb_url';orderDir=!orderDir;">Обложка</th>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="video in videos | filter:query | filter:isHiden | orderBy:orderProp:orderDir" >
+                        <td>{{$index+1}}</td>
+                        <td>{{video.publish_date | date:'dd.MM.yyyy'}}</td>
+                        <td>{{video.title}}</td>
+                        <td>{{video.url}}</td>
+                        <td>
+                            <img class="media-object" height="100" src="{{video.thumb_url}}" alt="video.thumb_url">
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-warning" ng-click="onEditOrAdd($index, video)">
+                                    Edit
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="onDelete($index, video)">
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</script>

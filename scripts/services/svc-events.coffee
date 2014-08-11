@@ -1,43 +1,42 @@
-class EventsSvc
+$eventsSvc = ($q, $http) ->
 
-  constructor: (@$q, @$http) ->
-
-  all: () ->
-    deffered = @$q.defer()
-    @$http.get('/api/events')
-      .success (data, status, headers, config) => 
+  return {
+    all: () ->
+      deffered = $q.defer()
+      $http.get('/api/events')
+      .success (data, status, headers, config) =>
         deffered.resolve(data)
-      .error (data, status, headers, config) => 
+      .error (data, status, headers, config) =>
         deffered.reject()
-    return deffered.promise;
+      return deffered.promise;
 
-  create: (doc) ->
-    deffered = @$q.defer()
-    @$http.post('/api/events', doc)
-      .success (data, status, headers, config) => 
+    create: (doc) ->
+      deffered = $q.defer()
+      $http.post('/api/events', doc)
+      .success (data, status, headers, config) =>
         deffered.resolve(data)
-      .error (data, status, headers, config) => 
+      .error (data, status, headers, config) =>
         deffered.reject()
-    return deffered.promise;
+      return deffered.promise;
 
-  save: (doc) ->
-    deffered = @$q.defer()
-    doc.updated = moment().toISOString()
-    @$http.put("/api/events/#{doc._id}", doc)
-      .success (data, status, headers, config) => 
+    save: (doc) ->
+      deffered = $q.defer()
+      doc.updated = moment().toISOString()
+      $http.put("/api/events/#{doc._id}", doc)
+      .success (data, status, headers, config) =>
         deffered.resolve(data)
-      .error (data, status, headers, config) => 
+      .error (data, status, headers, config) =>
         deffered.reject()
-    return deffered.promise;
+      return deffered.promise;
 
-  delete: (id) ->
-    deffered = @$q.defer()
-    @$http.delete("/api/events/#{id}")
-      .success (data, status, headers, config) => 
+    delete: (id) ->
+      deffered = $q.defer()
+      $http.delete("/api/events/#{id}")
+      .success (data, status, headers, config) =>
         deffered.resolve(data)
-      .error (data, status, headers, config) => 
+      .error (data, status, headers, config) =>
         deffered.reject()
-    return deffered.promise;
-
-
-angular.module("EventsSvc", []).service("EventsSvc", ["$q", "$http", EventsSvc])
+      return deffered.promise;
+  }
+  
+angular.module('coreLibs').factory("$eventsSvc", ["$q", "$http", $eventsSvc])
