@@ -132,7 +132,7 @@ app.put "/api/events/:id", restrict, (req, res) ->
   # id = req.body._id
   delete req.body._id
   console.log "PUT".cyan, "/api/events", req.body
-  Event.findByIdAndUpdate req.params.id, req.body, upsert: yes, (err, result) ->
+  Event.update {"_id": mg.Types.ObjectId(req.params.id)}, req.body, upsert: yes, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
 
@@ -160,7 +160,7 @@ app.post "/api/notice", restrict, (req, res) ->
 app.put "/api/notice/:id", restrict, (req, res) ->
   console.log "PUT".magenta, "/api/notice/:id", req.params, req.body
   delete req.body._id
-  Notice.findByIdAndUpdate req.params.id, req.body, upsert: yes, (err, result) ->
+  Notice.update {"_id": mg.Types.ObjectId(req.params.id)}, req.body, upsert: yes, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
 
@@ -187,7 +187,7 @@ app.post "/api/news", restrict, (req, res) ->
 app.put "/api/news/:id", restrict, (req, res) ->
   console.log "PUT".magenta, "/api/news/:id", req.params, req.body
   delete req.body._id
-  News.findByIdAndUpdate req.params.id, req.body, upsert: yes, (err, result) ->
+  News.update {"_id": mg.Types.ObjectId(req.params.id)}, req.body, upsert: yes, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
 
@@ -214,7 +214,7 @@ app.post "/api/members", restrict, (req, res) ->
 app.put "/api/members/:id", restrict, (req, res) ->
   console.log "PUT".magenta, "/api/members/:id", req.params, req.body
   delete req.body._id
-  Member.findByIdAndUpdate req.params.id, req.body, upsert: yes, (err, result) ->
+  Member.update {"_id": mg.Types.ObjectId(req.params.id)}, req.body, upsert: yes, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
 
@@ -242,7 +242,7 @@ app.post "/api/video", restrict, (req, res) ->
 app.put "/api/video/:id", restrict, (req, res) ->
   console.log "PUT".magenta, "/api/video/:id", req.params, req.body
   delete req.body._id
-  Video.findByIdAndUpdate req.params.id, req.body, upsert: yes, (err, result) ->
+  Video.update {"_id": mg.Types.ObjectId(req.params.id)}, req.body, upsert: yes, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
 
