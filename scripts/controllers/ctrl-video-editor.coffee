@@ -31,11 +31,11 @@ angular.module('appLibs').controller "VideoEditorCtrl", ($scope, $videoSvc, $cor
           $scope.newVideo = angular.copy(cVideo)
         else
           $scope.newVideo = {
-            video_id: ""
+            video_id: "_REPLACE_ME_"
             title: ""
             content: ""
-            url: ""
-            thumb_url: ""
+            url: "http://www.youtube.com/embed/_REPLACE_ME_?feature=player_embeded&autoplay=1"
+            thumb_url: "http://img.youtube.com/vi/_REPLACE_ME_/0.jpg"
             source_url: ""
             published: yes
             publish_date: moment().toISOString()

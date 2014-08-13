@@ -6,8 +6,8 @@ configure = ($routeProvider, $locationProvider, $httpProvider) ->
 
   $routeProvider
     .when "/",
-      templateUrl: "events2-view"
-      controller: "EventEditor2Ctrl"
+      templateUrl: "events-view"
+      controller: "EventEditorCtrl"
     .when "/events",
       templateUrl: "events-view"
       controller: "EventEditorCtrl"

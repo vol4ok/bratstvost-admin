@@ -129,9 +129,8 @@ app.post "/api/events", restrict, (req, res) ->
     res.json(status: "OK", _id: result._id)
 
 app.put "/api/events/:id", restrict, (req, res) ->
-  # id = req.body._id
+  console.log "PUT".magenta, "/api/events/:id", req.params, req.body
   delete req.body._id
-  console.log "PUT".cyan, "/api/events", req.body
   Event.update {"_id": mg.Types.ObjectId(req.params.id)}, req.body, upsert: yes, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")

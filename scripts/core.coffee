@@ -1,10 +1,9 @@
 angular.module('coreLibs', [])
 
-$core = ($rootScope, $coreEvents, $coreMembers) -> 
-  $core.$inject = ["$rootScope", "$coreEvents", "$coreMembers"]
+$core = ($rootScope, $coreMembers) ->
+  $core.$inject = ["$rootScope", "$coreMembers"]
   
   exports = 
-    $events: $coreEvents
     $members: $coreMembers
   
   $rootScope.$core = exports

@@ -15,7 +15,7 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
   $scope.onDelete = (index, event) ->
     console.log("onDelete", index, event)
     if confirm("Удалить событие?")
-      _.remove $scope.events, (note) -> note._id == event._id
+      _.remove $scope.events, (evt) -> evt._id == event._id
       $eventsSvc.delete(event._id).then ->
         alerts.push({type: "danger", msg: "Удалено!"})
 
@@ -53,10 +53,11 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
           event.updated = new Date
           if newEvent.cakes
             event.custom_field = [] unless event.custom_field
-            event.custom_field.push
-              icon: "cake-1"
-              term: "Выпечка"
-              desc: FSM(newEvent.cakes)
+            if event.custom_field.length == 0
+              event.custom_field.push
+                icon: "cake-1"
+                term: "Выпечка"
+                desc: newEvent.cakes
 
           return event
 
@@ -76,8 +77,8 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
 
     .result.then (event) ->
       if editMode
-        index = _.findIndex $scope.events, (event) ->
-          return event._id == event._id
+        index = _.findIndex $scope.events, (evt) ->
+          return evt._id == event._id
         console.log("CHECK", index, $scope.events, $scope.events[index], event)
         $scope.events[index] = event
         $eventsSvc.save(event._id, event).then ->

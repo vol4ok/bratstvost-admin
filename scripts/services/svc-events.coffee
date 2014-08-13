@@ -1,41 +1,45 @@
 $eventsSvc = ($q, $http) ->
 
   return {
-    all: () ->
+     all: () ->
       deffered = $q.defer()
       $http.get('/api/events')
-      .success (data, status, headers, config) =>
-        deffered.resolve(data)
-      .error (data, status, headers, config) =>
-        deffered.reject()
+        .success (data, status, headers, config) =>
+          deffered.resolve(data)
+        .error (data, status, headers, config) =>
+          deffered.reject()
       return deffered.promise;
 
     create: (doc) ->
       deffered = $q.defer()
       $http.post('/api/events', doc)
-      .success (data, status, headers, config) =>
-        deffered.resolve(data)
-      .error (data, status, headers, config) =>
-        deffered.reject()
+        .success (data, status, headers, config) =>
+          deffered.resolve(data)
+        .error (data, status, headers, config) =>
+          deffered.reject()
       return deffered.promise;
 
-    save: (doc) ->
+    save: (id, doc) ->
+      if arguments.length is 1
+        doc = id
+        id = doc._id
+      console.log "AD_SVC: save", id, doc
       deffered = $q.defer()
       doc.updated = moment().toISOString()
-      $http.put("/api/events/#{doc._id}", doc)
-      .success (data, status, headers, config) =>
-        deffered.resolve(data)
-      .error (data, status, headers, config) =>
-        deffered.reject()
+      $http.put("/api/events/#{id}", doc)
+        .success (data, status, headers, config) =>
+          deffered.resolve(data)
+        .error (data, status, headers, config) =>
+          deffered.reject()
       return deffered.promise;
 
     delete: (id) ->
       deffered = $q.defer()
       $http.delete("/api/events/#{id}")
-      .success (data, status, headers, config) =>
-        deffered.resolve(data)
-      .error (data, status, headers, config) =>
-        deffered.reject()
+        .success (data, status, headers, config) =>
+          deffered.resolve(data)
+        .error (data, status, headers, config) =>
+          deffered.reject()
       return deffered.promise;
   }
   
