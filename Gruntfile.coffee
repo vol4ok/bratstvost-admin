@@ -194,7 +194,7 @@ module.exports = (grunt) ->
             expand: yes
             cwd: "bower_components/tinymce"
             src: "**"
-            dest: "dist/tinymce"
+            dest: "dist/public/tinymce"
           ,
             expand: yes
             cwd: "bower_components/tinymce"
@@ -236,7 +236,7 @@ module.exports = (grunt) ->
         "dist/models"
         "dist/public"
         "dist/views"
-        "dist/tinymce"
+        "dist/public/tinymce"
         "dist/package.json"
         "dist/Procfile"
         "dist/web.js"
