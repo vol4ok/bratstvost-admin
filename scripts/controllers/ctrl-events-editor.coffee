@@ -32,7 +32,7 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
         else
           $scope.newEvent = {
             type:          "event"
-            date:          moment().add(1,'d').format("YYYY-MM-DD")
+            date:          moment().zone("+03:00").add(1,'d').hours(15).format("YYYY-MM-DD") # set Minsk timezone
             title:         ""
             body:          ""
             event_time:    ""
@@ -50,6 +50,8 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
         getEventObj = (newEvent) ->
           event = angular.copy(newEvent)
           event.body = newEvent.body.trim()
+          # set Minsk timezone, fix for: https://github.com/angular-ui/bootstrap/issues/2072
+          event.date = moment(event.date).zone("+03:00").format("YYYY-MM-DD")
           event.updated = new Date
           if newEvent.cakes
             event.custom_field = [] unless event.custom_field

@@ -49,6 +49,7 @@ angular.module('adminApp', [
     'ui.bootstrap.tpls'
     'ui.bootstrap'
     'adminApp.filters'
+    'ui.tinymce'
   ])
   .config([ '$routeProvider', '$locationProvider', '$httpProvider', configure ])
   .run(["$core", main])

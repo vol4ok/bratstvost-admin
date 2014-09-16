@@ -88,7 +88,7 @@ module.exports = (grunt) ->
           "bower_components/angular-sanitize/angular-sanitize.js"
           "bower_components/angular-bootstrap/ui-bootstrap-tpls.js"
           "bower_components/angular-bootstrap/ui-bootstrap.js"
-          "bower_components/jquery-ui/ui/jquery-ui.js"
+          "bower_components/jquery-ui/jquery-ui.js"
           "bower_components/codemirror/lib/codemirror.js"
           "bower_components/codemirror/mode/javascript/javascript.js"
           "bower_components/angular-ui-codemirror/ui-codemirror.js"
@@ -100,6 +100,7 @@ module.exports = (grunt) ->
           "bower_components/angular-ui-date/src/date.js"
           "bower_components/select2/select2.js"
           "bower_components/angular-ui-select2/src/select2.js"
+          "tinymce_custom_settings.js"
         ]
         dest: "public/js/core.js"
 
@@ -123,7 +124,7 @@ module.exports = (grunt) ->
           "bower_components/angular-sanitize/angular-sanitize.min.js"
           "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"
           "bower_components/angular-bootstrap/ui-bootstrap.min.js"
-          "bower_components/jquery-ui/ui/jquery-ui.js"
+          "bower_components/jquery-ui/jquery-ui.js"
           "bower_components/codemirror/lib/codemirror.js"
           "bower_components/codemirror/mode/javascript/javascript.js"
           "bower_components/angular-ui-codemirror/ui-codemirror.js"
@@ -135,6 +136,7 @@ module.exports = (grunt) ->
           "bower_components/angular-ui-date/src/date.js"
           "bower_components/select2/select2.js"
           "bower_components/angular-ui-select2/src/select2.js"
+          "tinymce_custom_settings.js"
         ]
         dest: "temp/js/core.js"
 
@@ -188,6 +190,16 @@ module.exports = (grunt) ->
             cwd: "views/"
             src: "**"
             dest: "dist/views"
+          ,
+            expand: yes
+            cwd: "bower_components/tinymce"
+            src: "**"
+            dest: "dist/tinymce"
+          ,
+            expand: yes
+            cwd: "bower_components/tinymce"
+            src: "**"
+            dest: "public/tinymce"
         ]
 
     ### ------------------------ ###
@@ -224,13 +236,14 @@ module.exports = (grunt) ->
         "dist/models"
         "dist/public"
         "dist/views"
+        "dist/tinymce"
         "dist/package.json"
         "dist/Procfile"
         "dist/web.js"
         "dist/nginx.conf"
       ]
       temp: ["temp"]
-      pub: ["public/js/*.js", "public/css/*.css"]
+      pub: ["public/js/*.js", "public/css/*.css", "public/tinymce/"]
 
 
   grunt.registerTask "bootstrap", ["less:bootstrap"]
