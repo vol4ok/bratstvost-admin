@@ -51,8 +51,8 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
                email: ''
                skype: ''
                info: ''
-              birthDate:
-              angelDate:
+              birthDate:''
+              angelDate:''
               active: yes
               orderNumber: 50 }
 
