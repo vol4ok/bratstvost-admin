@@ -156,6 +156,20 @@
         </div>
 
           <div class="form-group">
+              <label for="new-birth-date">День Рождения</label>
+               <input ui-date="dateOptions" class="form-control"
+                         id="new-birth-date" placeholder="День Рождения"
+                         ng-model="newMember.birthDate">
+          </div>
+
+          <div class="form-group">
+              <label for="new-angel-date">День Ангела</label>
+               <input ui-date="dateOptions" class="form-control"
+                         id="new-angel-date" placeholder="День Ангела"
+                         ng-model="newMember.angelDate">
+          </div>
+
+          <div class="form-group">
               <div class="btn-group" id="is-active-input">
                   <button type="button" class="btn btn-default" ng-model="newMember.active" btn-radio="true">Действующий</button>
                   <button type="button" class="btn btn-default" ng-model="newMember.active" btn-radio="false">Неактивный(не отображается на сайте)</button>
