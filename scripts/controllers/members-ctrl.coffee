@@ -76,9 +76,9 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
             member.info = FSM(newMember.info)
             member.phone = newMember.phone
             member.active = !!newMember.active
-            member.orderNumber = moment(newMember.orderNumber).zone("+03:00").hours(15).format("YYYY-MM-DD")
-            member.birthDate = moment(newMember.birthDate).zone("+03:00").hours(15).format("YYYY-MM-DD")
-            member.angelDate = newMember.angelDate
+            member.orderNumber = newMember.orderNumber
+            member.birthDate = moment(newMember.birthDate).zone("+03:00").hours(15).format("YYYY-MM-DD") if newMember.birthDate
+            member.angelDate = moment(newMember.angelDate).zone("+03:00").hours(15).format("YYYY-MM-DD") if newMember.angelDate
             member.updated = new Date
 
             return member
