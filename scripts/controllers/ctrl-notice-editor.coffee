@@ -34,7 +34,7 @@ angular.module('appLibs').controller "NoticeEditorCtrl", ($scope, $noticeSvc, $c
             type: "notice"
             body: ""
             show_begins: moment().toISOString()
-            show_ends: "9999-12-31T23:59:59.999Z"
+            show_ends: "9999-11-11T23:59:59.999Z"
             priority: 0
             style: ""
             published: yes

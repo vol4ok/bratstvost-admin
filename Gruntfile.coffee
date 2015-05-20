@@ -87,20 +87,18 @@ module.exports = (grunt) ->
           "bower_components/angular-route/angular-route.js"
           "bower_components/angular-sanitize/angular-sanitize.js"
           "bower_components/angular-bootstrap/ui-bootstrap-tpls.js"
-          "bower_components/angular-bootstrap/ui-bootstrap.js"
+          "bower_components/bootstrap/dist/js/bootstrap.js"
           "bower_components/jquery-ui/jquery-ui.js"
-          "bower_components/codemirror/lib/codemirror.js"
-          "bower_components/codemirror/mode/javascript/javascript.js"
-          "bower_components/angular-ui-codemirror/ui-codemirror.js"
           "bower_components/moment/min/moment.min.js"
           "bower_components/moment/min/langs.min.js"
           "bower_components/node-uuid/uuid.js"
           "bower_components/angular-uuid4/angular-uuid4.js"
-          "bower_components/marked/lib/marked.js"
           "bower_components/angular-ui-date/src/date.js"
           "bower_components/select2/select2.js"
           "bower_components/angular-ui-select2/src/select2.js"
-          "tinymce_custom_settings.js"
+          "bower_components/summernote/dist/summernote.js"
+          "bower_components/summernote/lang/summernote-ru-RU.js"
+          "bower_components/angular-summernote/dist/angular-summernote.js"
         ]
         dest: "public/js/core.js"
 
@@ -124,31 +122,29 @@ module.exports = (grunt) ->
           "bower_components/angular-sanitize/angular-sanitize.min.js"
           "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"
           "bower_components/angular-bootstrap/ui-bootstrap.min.js"
+          "bower_components/bootstrap/dist/js/bootstrap.min.js"
           "bower_components/jquery-ui/jquery-ui.js"
-          "bower_components/codemirror/lib/codemirror.js"
-          "bower_components/codemirror/mode/javascript/javascript.js"
-          "bower_components/angular-ui-codemirror/ui-codemirror.js"
           "bower_components/moment/min/moment.min.js"
           "bower_components/moment/min/langs.min.js"
           "bower_components/node-uuid/uuid.js"
           "bower_components/angular-uuid4/angular-uuid4.js"
-          "bower_components/marked/lib/marked.js"
           "bower_components/angular-ui-date/src/date.js"
           "bower_components/select2/select2.js"
           "bower_components/angular-ui-select2/src/select2.js"
-          "tinymce_custom_settings.js"
+          "bower_components/summernote/dist/summernote.min.js"
+          "bower_components/summernote/lang/summernote-ru-RU.js"
+          "bower_components/angular-summernote/dist/angular-summernote.min.js"
         ]
         dest: "temp/js/core.js"
 
       styles:
         src: [
           "styles/core/bratstvost-icon-font.css"
-          "bower_components/codemirror/lib/codemirror.css"
-          "bower_components/codemirror/theme/tomorrow-night-eighties.css"
-          "bower_components/select2/select2.css"
           "bower_components/jquery-ui/themes/flick/jquery-ui.css"
+          "bower_components/summernote/dist/summernote.css"
           "temp/css/bootstrap.css"
           "temp/css/admin-app.css"
+          "bower_components/bootstrap/dist/css/bootstrap.min.css"
         ]
         dest: "public/css/styles.css"
 
@@ -190,16 +186,6 @@ module.exports = (grunt) ->
             cwd: "views/"
             src: "**"
             dest: "dist/views"
-          ,
-            expand: yes
-            cwd: "bower_components/tinymce"
-            src: "**"
-            dest: "dist/public/tinymce"
-          ,
-            expand: yes
-            cwd: "bower_components/tinymce"
-            src: "**"
-            dest: "public/tinymce"
         ]
 
     ### ------------------------ ###
@@ -236,14 +222,13 @@ module.exports = (grunt) ->
         "dist/models"
         "dist/public"
         "dist/views"
-        "dist/public/tinymce"
         "dist/package.json"
         "dist/Procfile"
         "dist/web.js"
         "dist/nginx.conf"
       ]
       temp: ["temp"]
-      pub: ["public/js/*.js", "public/css/*.css", "public/tinymce/"]
+      pub: ["public/js/*.js", "public/css/*.css"]
 
 
   grunt.registerTask "bootstrap", ["less:bootstrap"]

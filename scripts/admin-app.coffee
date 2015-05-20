@@ -45,11 +45,10 @@ angular.module('adminApp', [
     'ui.date',
     'ui.select2'
     'uuid4'
-    'ui.codemirror'
     'ui.bootstrap.tpls'
     'ui.bootstrap'
     'adminApp.filters'
-    'ui.tinymce'
+    'summernote'
   ])
   .config([ '$routeProvider', '$locationProvider', '$httpProvider', configure ])
   .run(["$core", main])

@@ -12,12 +12,11 @@
             <div class="col-sm-6" class="form-horizontal">
                 <div class="form-group">
                     <label for="body-input">Содержание:</label>
-                    <textarea type="text" id="body-input" class="form-control"
-                              ui-tinymce ng-model="newNotice.body" rows="5"></textarea>
+                    <summernote ng-model="newNotice.body" lang="ru-RU"></summernote>
                 </div>
 
                 <div class="form-group">
-                    <label for="body-input">Опубликовано:</label><br>
+                    <label for="is-published-input">Опубликовано:</label><br>
                     <div class="btn-group" id="is-published-input">
                         <button type="button" class="btn btn-default" ng-model="newNotice.published" btn-radio="true">Да</button>
                         <button type="button" class="btn btn-default" ng-model="newNotice.published" btn-radio="false">Нет</button>
