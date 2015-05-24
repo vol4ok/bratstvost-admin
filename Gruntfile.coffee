@@ -41,13 +41,11 @@ module.exports = (grunt) ->
           bare: yes
         files:
           "dist/web.js":            "index.coffee"
-          "dist/models/post.js":    "models/post.coffee"
           "dist/models/event.js":   "models/event.coffee"
           "dist/models/notice.js":  "models/notice.coffee"
           "dist/models/news.js":    "models/news.coffee"
           "dist/models/member.js":    "models/member.coffee"
           "dist/models/video.js":    "models/video.coffee"
-          #"dist/models/article.js": "models/article.coffee"
 
 
     ### ---------------------- ###
@@ -93,7 +91,7 @@ module.exports = (grunt) ->
           "bower_components/moment/min/langs.min.js"
           "bower_components/node-uuid/uuid.js"
           "bower_components/angular-uuid4/angular-uuid4.js"
-          "bower_components/angular-ui-date/src/date.js"
+          "bower_components/marked/lib/marked.js"
           "bower_components/select2/select2.js"
           "bower_components/angular-ui-select2/src/select2.js"
           "bower_components/summernote/dist/summernote.js"
@@ -121,14 +119,13 @@ module.exports = (grunt) ->
           "bower_components/angular-route/angular-route.min.js"
           "bower_components/angular-sanitize/angular-sanitize.min.js"
           "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"
-          "bower_components/angular-bootstrap/ui-bootstrap.min.js"
           "bower_components/bootstrap/dist/js/bootstrap.min.js"
           "bower_components/jquery-ui/jquery-ui.js"
           "bower_components/moment/min/moment.min.js"
           "bower_components/moment/min/langs.min.js"
           "bower_components/node-uuid/uuid.js"
           "bower_components/angular-uuid4/angular-uuid4.js"
-          "bower_components/angular-ui-date/src/date.js"
+          "bower_components/marked/lib/marked.js"
           "bower_components/select2/select2.js"
           "bower_components/angular-ui-select2/src/select2.js"
           "bower_components/summernote/dist/summernote.min.js"
@@ -166,11 +163,6 @@ module.exports = (grunt) ->
             dest: "dist/public/fonts/"
           ,
             expand: yes
-            cwd: "public/css/"
-            src: "*.png"
-            dest: "dist/public/css/"
-          ,
-            expand: yes
             cwd: "public/"
             src: "favicon.ico"
             dest: "dist/public"
@@ -180,7 +172,6 @@ module.exports = (grunt) ->
             src: ["package.json", "Procfile", "nginx.conf"]
             dest: "dist"
             filter: 'isFile' 
-
           ,
             expand: yes
             cwd: "views/"
@@ -238,3 +229,5 @@ module.exports = (grunt) ->
   grunt.registerTask "dist", ["styles", "coffee", "concat:dist", "cssmin", "uglify", "copy"]
   grunt.registerTask "build", ["core", "default", "dist"]
   grunt.registerTask "rebuild", ["clean", "core", "default", "dist"]
+
+  grunt.registerTask "dev", ["clean", "styles", "coffee", "concat:core", "concat:app", "copy"]

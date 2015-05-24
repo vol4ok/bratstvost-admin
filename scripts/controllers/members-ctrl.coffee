@@ -36,6 +36,9 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
         templateUrl: 'myModalContent.html'
         controller: ($scope, $modalInstance) ->
 
+          $scope.datepickerBD = { isOpen: false }
+          $scope.datepickerAD = { isOpen: false }
+
           if editMode
             $scope.newMember = angular.copy(memb)
           else
@@ -51,10 +54,10 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
                email: ''
                skype: ''
                info: ''
-              birthDate:''
-              angelDate:''
-              active: yes
-              orderNumber: 50 }
+               birthDate:''
+               angelDate:''
+               active: yes
+               orderNumber: 50 }
 
           getMemberObj = (newMember) ->
             if editMode

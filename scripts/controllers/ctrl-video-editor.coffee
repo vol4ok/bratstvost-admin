@@ -27,6 +27,8 @@ angular.module('appLibs').controller "VideoEditorCtrl", ($scope, $videoSvc, $cor
       templateUrl: 'videoModalContent.html'
       controller: ($scope, $modalInstance) ->
 
+        $scope.datepicker = { isOpen: false }
+
         if editMode
           $scope.newVideo = angular.copy(cVideo)
         else

@@ -1,8 +1,11 @@
-configure = ($routeProvider, $locationProvider, $httpProvider) ->
+configure = ($routeProvider, $locationProvider, $httpProvider, datepickerConfig, datepickerPopupConfig) ->
   moment.lang('ru')
 
   $locationProvider
-    .html5Mode(yes)
+    .html5Mode({
+      enabled: true,
+      requireBase: false
+    })
 
   $routeProvider
     .when "/",
@@ -24,8 +27,13 @@ configure = ($routeProvider, $locationProvider, $httpProvider) ->
       templateUrl: "videos-view"
       controller: "VideoEditorCtrl"
 
+  datepickerConfig.startingDay = 1;
+  datepickerConfig.showWeeks = false;
 
-main = () ->
+#  datepickerPopupConfig.datepickerPopup = "dd-MM-yyyy";
+  datepickerPopupConfig.currentText = "Сегодня";
+  datepickerPopupConfig.clearText = "Очистить";
+  datepickerPopupConfig.closeText = "Закрыть";
 
 angular.module('appLibs', [])
 
@@ -42,13 +50,18 @@ angular.module('adminApp', [
     'ngRoute'
     'core'
     'appLibs'
-    'ui.date',
     'ui.select2'
     'uuid4'
-    'ui.bootstrap.tpls'
     'ui.bootstrap'
     'adminApp.filters'
     'summernote'
-  ])
-  .config([ '$routeProvider', '$locationProvider', '$httpProvider', configure ])
-  .run(["$core", main])
+  ]).config([ '$routeProvider', '$locationProvider', '$httpProvider', 'datepickerConfig', 'datepickerPopupConfig', configure ])
+  .run ($rootScope) ->
+    # configure global functions here
+    # set up ui.bootstrap.datepicker
+
+    $rootScope.openDatepicker = (datepicker, $event) ->
+      $event.preventDefault()
+      $event.stopPropagation()
+      datepicker.isOpen = true
+

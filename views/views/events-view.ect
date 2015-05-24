@@ -13,11 +13,13 @@
     <div class="form-group">
         <label for="new-event-date">Дата события</label>
         <div class="col-sm-10">
-            <input ui-date="dateOptions"
-                   class="form-control"
-                   id="new-event-date"
-                   placeholder="Дата"
-                   ng-model="newEvent.date">
+            <p class="input-group">
+                <input datepicker-popup is-open="datepicker.isOpen"
+                       class="form-control" id="new-event-date" ng-model="newEvent.date" >
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="openDatepicker(datepicker, $event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
         </div>
     </div>
 

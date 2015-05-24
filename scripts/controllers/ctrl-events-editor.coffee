@@ -27,6 +27,8 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
       templateUrl: 'eventModalContent.html'
       controller: ($scope, $modalInstance) ->
 
+        $scope.datepicker = { isOpen: false }
+
         if editMode
           $scope.newEvent = angular.copy(event)
         else

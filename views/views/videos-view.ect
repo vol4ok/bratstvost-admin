@@ -13,11 +13,13 @@
                 <div class="form-group">
                     <label for="publish_date-input" >Дата публикации:</label>
                     <div class="col-sm-10">
-                        <input ui-date="dateOptions"
-                               class="form-control"
-                               id="publish_date-input"
-                               placeholder="Дата публикации"
-                               ng-model="newVideo.publish_date">
+                        <p class="input-group">
+                            <input datepicker-popup is-open="datepicker.isOpen"
+                                   class="form-control" id="publish_date-input" ng-model="newVideo.publish_date" >
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="openDatepicker(datepicker, $event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
                     </div>
                 </div>
 

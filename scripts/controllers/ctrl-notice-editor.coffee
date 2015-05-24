@@ -1,4 +1,4 @@
-angular.module('appLibs').controller "NoticeEditorCtrl", ($scope, $noticeSvc, $core, $modal) ->
+angular.module('appLibs').controller "NoticeEditorCtrl", ($scope, $noticeSvc, $core, $modal, $filter) ->
 
   $noticeSvc.all().then (notices) ->
     $scope.notices = notices
@@ -26,6 +26,8 @@ angular.module('appLibs').controller "NoticeEditorCtrl", ($scope, $noticeSvc, $c
     modalInstance = $modal.open
       templateUrl: 'modalContent.html'
       controller: ($scope, $modalInstance) ->
+
+        $scope.datepicker = { isOpen: false }
 
         if editMode
           $scope.newNotice = angular.copy(note)
