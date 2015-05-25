@@ -80,8 +80,8 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
             member.phone = newMember.phone
             member.active = !!newMember.active
             member.orderNumber = newMember.orderNumber
-            member.birthDate = moment(newMember.birthDate).zone("+03:00").hours(15).format("YYYY-MM-DD") if newMember.birthDate
-            member.angelDate = moment(newMember.angelDate).zone("+03:00").hours(15).format("YYYY-MM-DD") if newMember.angelDate
+            member.birthDate = newMember.birthDate
+            member.angelDate  = newMember.angelDate
             member.updated = new Date
 
             return member
@@ -94,6 +94,13 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
 
           $scope.save = ->
             result = getMemberObj($scope.newMember)
+            # fix timezone offset
+            if result.birthDate && result.birthDate instanceof Date
+              result.birthDate.setHours(0)
+              result.birthDate = new Date(result.birthDate.getTime() + Math.abs(result.birthDate.getTimezoneOffset()) * 60000)
+            if result.angelDate && result.angelDate instanceof Date
+              result.angelDate.setHours(0)
+              result.angelDate = new Date(result.angelDate.getTime() + Math.abs(result.angelDate.getTimezoneOffset()) * 60000)
             console.log "SAVE MEMBER", result
             $modalInstance.close(result)
 
