@@ -82,6 +82,8 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
         $scope.cancel = ->
           $modalInstance.dismiss('cancel')
 
+        setTimeout( (() -> angular.element('#new-event-title').trigger('focus')), 100 )
+
     .result.then (event) ->
       if editMode
         index = _.findIndex $scope.events, (evt) ->

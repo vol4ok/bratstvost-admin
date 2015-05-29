@@ -65,3 +65,6 @@ angular.module('adminApp', [
       $event.stopPropagation()
       datepicker.isOpen = true
 
+    $rootScope.closeAlert = (index) ->
+      angular.element('.container').scope().alerts.splice(index, 1)
+

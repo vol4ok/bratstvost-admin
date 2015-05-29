@@ -105,7 +105,8 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
             $modalInstance.close(result)
 
           $scope.cancel = ->
-            $modalInstance.dismiss('cancel') 
+            $modalInstance.dismiss('cancel')
+          setTimeout( (() -> angular.element('#full-name-input').trigger('focus')), 100 )
 
       .result.then (member) ->
         if editMode

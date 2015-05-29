@@ -30,7 +30,7 @@ angular.module('appLibs').controller "NewsEditorCtrl", ($scope, $newsSvc, $core,
         else
           $scope.newNews = {
             type: "news"
-            body: "<p>Описание...<a href=\"https://www.adoberevel.com/shares/e7f7eabd3da14f56aff7f33cc7f3649f\" target=\"_blank\" class=\"btn btn-info btn-sm more\">Фото →</a> <a href=\"https://www.youtube.com/watch?v=NBONP440yyA\" target=\"_blank\" class=\"btn btn-info btn-sm more\">Видео →</a> <a href=\"http://blog.bratstvost.by/post/84320352964\" target=\"_blank\" class=\"btn btn-info btn-sm more\">Читать →</a></p>"
+            body: "<p> Новость  <a href=\"https://www.adoberevel.com/shares/e7f7eabd3da14f56aff7f33cc7f3649f\" target=\"_blank\" class=\"btn btn-info btn-sm more\">Фото →</a> <a href=\"https://www.youtube.com/watch?v=NBONP440yyA\" target=\"_blank\" class=\"btn btn-info btn-sm more\">Видео →</a> <a href=\"http://blog.bratstvost.by/post/84320352964\" target=\"_blank\" class=\"btn btn-info btn-sm more\">Читать →</a></p>"
             date: moment().toISOString()
             published: yes
             created: moment().toISOString()

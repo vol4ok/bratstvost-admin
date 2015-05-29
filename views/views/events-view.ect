@@ -24,7 +24,7 @@
     </div>
 
     <div class="form-group">
-        <label for="new-event-title">Название</label>
+        <label for="new-event-title" class="full-width">Название</label>
 
         <div class="col-sm-10">
             <input type="text"
@@ -33,21 +33,20 @@
                    id="new-event-title"
                    placeholder="Название"
                    ng-model="newEvent.title">
-
             <datalist id="title-suggestions">
-                <option value="Выезд в ПНИ г. Молодечно">
-                <option value="Выезд в Борисовский ПНИ">
-                <option value="Выезд в Столбцовский ПНИ">
-                <option value="Выезд в ПНИ г.Червень">
-                <option value="Посещение ПНИ в Дражне">
-                <option value="Посещение ПНИ в г. Молодечно">
+                <option value="Посещение <abbr title='Психоневрологический интернат'>ПНИ</abbr> в Дражне">
+                <option value="Выезд в <abbr title='Психоневрологический интернат'>ПНИ</abbr> г. Молодечно">
                 <option value="Собрание братства">
+                <option value="Выезд в Борисовский <abbr title='Психоневрологический интернат'>ПНИ</abbr> д. Тарасики">
+                <option value="Выезд в <abbr title='Психоневрологический интернат'>ПНИ</abbr> г.Червень">
+                <option value="Выезд в Столбцовский <abbr title='Психоневрологический интернат'>ПНИ</abbr> д. Куль">
+                <option value="Выезд в Свирский <abbr title='Психоневрологический интернат'>ПНИ</abbr> д. Лущики">
             </datalist>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="new-event-body">Описание</label>
+        <label for="new-event-body" class="full-width">Описание</label>
 
         <div class="col-sm-10">
             <textarea id="new-event-body" ng-model="newEvent.body" class="form-control" rows="3"
@@ -56,7 +55,7 @@
     </div>
 
     <div class="form-group">
-        <label for="new-event-oraganizer">Организатор</label>
+        <label for="new-event-oraganizer" class="full-width">Организатор</label>
 
         <div class="col-sm-10">
             <input type="text"
@@ -70,14 +69,16 @@
                 <option value="брат Сергий">
                 <option value="сестра Ангелина">
                 <option value="сестра Татьяна">
+                <option value="сестра Анна">
+                <option value="Алла Леонидовна">
                 <option value="сестра Светлана">
-                <option value="сестра Мария">
+                <option value="брат Юрий">
             </datalist>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="new-event-phone">Телефон:</label>
+        <label for="new-event-phone" class="full-width">Телефон:</label>
 
         <div class="col-sm-10">
             <input type="text"
@@ -89,10 +90,12 @@
 
             <datalist id="phone-suggestions">
                 <option value="8 (029) 373-72-50">брат Сергий</option>
-                <option value="8 (029) 143-21-77">сестра Татьяна</option>
                 <option value="8 (029) 159-77-04">сестра Ангелина</option>
+                <option value="8 (029) 143-21-77">сестра Татьяна</option>
+                <option value="8 (029) 678-58-15">сестра Анна</option>
+                <option value="8 (029) 151-65-02">Алла Леонидовна</option>
                 <option value="8 (029) 570-71-07">сестра Светлана</option>
-
+                <option value="8 (033) 340-09-86">брат Юрий</option>
             </datalist>
         </div>
     </div>
@@ -109,6 +112,7 @@
                    ng-model="newEvent.meeting_time">
 
             <datalist id="meetingtime-suggestions">
+                <option value="6:00">
                 <option value="7:00">
                 <option value="8:00">
                 <option value="9:00">
@@ -138,10 +142,12 @@
                    ng-model="newEvent.meeting_place">
 
             <datalist id="meetingplace-suggestions">
+                <option value="ст. м. Малиновка">
+                <option value="ст. м. Могилевская">
                 <option value="ст. м. Уручье">
                 <option value="ст. м. Каменная Горка">
                 <option value="ст. м. Петровщина">
-                <option value="ст. м. Могилевская">
+                <option value="г.Заславль">
             </datalist>
         </div>
     </div>
@@ -187,16 +193,17 @@
                    ng-model="newEvent.event_place">
 
             <datalist id="eventplace-suggestions">
-                <option value="Офис Blue Sky Talent Company">
-                <option value="Приход в честь иконы Божией Матери «Всех скорбящих Радость»">
+                <option value="ул. Ваупшасова, д. 33">ПНИ в Дражне</option>
                 <option value="храм Преображения Господня, г. Заславль">
-                <option value="ул. Ваупшасова, д. 33">
+                <option value="ул. Козлова, 3, Дворец искусства">
+                <option value="ул. Кульман, д. 33а">офис собрания братства</option>
+                <option value="ул. Притыцкого, 65 (ст. м. Спортивная)<br>Конференц зал (2-й этаж), приход в честь иконы Божией Матери «Всех скорбящих Радость»">
             </datalist>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="new-event-cakes">Выпечка:</label>
+        <label for="new-event-cakes" class="full-width">Выпечка:</label>
 
         <div class="col-sm-10">
             <input type="text"
@@ -214,7 +221,7 @@
     </div>
 
     <div class="form-group">
-        <label for="new-event-cost">Стоимось:</label>
+        <label for="new-event-cost" class="full-width">Стоимось:</label>
 
         <div class="col-sm-10">
             <input type="text"

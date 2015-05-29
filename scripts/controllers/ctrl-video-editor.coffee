@@ -65,6 +65,8 @@ angular.module('appLibs').controller "VideoEditorCtrl", ($scope, $videoSvc, $cor
         $scope.cancel = ->
           $modalInstance.dismiss('cancel')
 
+        setTimeout( (() -> angular.element('#video_id-input').trigger('focus')), 100 )
+
     .result.then (video) ->
       if editMode
         index = _.findIndex $scope.videos, (cVideo) ->

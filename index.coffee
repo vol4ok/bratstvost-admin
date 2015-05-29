@@ -28,9 +28,9 @@ app
 
 COOKIE_SECRET = 'tarasiki'
   
-app 
+app
   .use(exs.urlencoded())
-  .use(exs.json())
+  .use(exs.json({limit: '5mb'}))
   .use(exs.cookieParser(COOKIE_SECRET))
   .use(exs.session())
   .use(exs.logger("short"))
