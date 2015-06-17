@@ -76,6 +76,8 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
           if result.date && result.date instanceof Date
             result.date.setHours(0)
             result.date = new Date(result.date.getTime() + Math.abs(result.date.getTimezoneOffset()) * 60000)
+          if result.title
+            result.title = result.title.replace(/ПНИ/g, "<abbr title=\"Психоневрологический интернат\">ПНИ</abbr>")
           console.log "SAVE EVENT", result
           $modalInstance.close(result)
 
