@@ -14,7 +14,7 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
 
   $scope.onDelete = (index, event) ->
     console.log("onDelete", index, event)
-    if confirm("Удалить событие?")
+    if confirm("Удалить мероприятие?")
       _.remove $scope.events, (evt) -> evt._id == event._id
       $eventsSvc.delete(event._id).then ->
         alerts.push({type: "danger", msg: "Удалено!"})

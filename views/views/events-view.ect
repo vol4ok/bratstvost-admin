@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="eventModalContent.html">
 <div class="modal-header">
-    <h4 class="modal-title">Добавить событие</h4>
+    <h4 class="modal-title">Добавить мероприятие</h4>
 </div>
 <div class="modal-body">
 <div class="row">
@@ -11,7 +11,7 @@
 <div class="row">
 <div class="col-sm-6" class="form-horizontal">
     <div class="form-group">
-        <label for="new-event-date">Дата события</label>
+        <label for="new-event-date">Дата мероприятия</label>
         <div class="col-sm-10">
             <p class="input-group">
                 <input datepicker-popup is-open="datepicker.isOpen"
@@ -153,14 +153,14 @@
     </div>
 
     <div class="form-group">
-        <label for="new-event-eventtime">Время события</label>
+        <label for="new-event-eventtime">Время мероприятия</label>
 
         <div class="col-sm-10">
             <input type="text"
                    list="eventtime-suggestions"
                    class="form-control"
                    id="new-event-eventtime"
-                   placeholder="Время события"
+                   placeholder="Время мероприятия"
                    ng-model="newEvent.event_time">
 
             <datalist id="eventtime-suggestions">
@@ -182,14 +182,14 @@
     </div>
 
     <div class="form-group">
-        <label for="new-event-eventplace">Место события</label>
+        <label for="new-event-eventplace">Место мероприятия</label>
 
         <div class="col-sm-10">
             <input type="text"
                    list="eventplace-suggestions"
                    class="form-control"
                    id="new-event-eventplace"
-                   placeholder="Место события"
+                   placeholder="Место мероприятия"
                    ng-model="newEvent.event_place">
 
             <datalist id="eventplace-suggestions">
@@ -262,7 +262,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <p>
-                    <button class="btn btn-primary text-center" ng-click="onEditOrAdd()">+Добавить событие</button>
+                    <button class="btn btn-primary text-center" ng-click="onEditOrAdd()">+Добавить мероприятие</button>
                 </p>
             </div>
         </div>
@@ -277,7 +277,7 @@
                         <option value="body">Содержимому</option>
                     </select>
                     <a ng-init="orderDir=true" ng-click="orderDir=!orderDir">↑ ↓</a>
-                    <a ng-init="activeHiden=false" ng-click="activeHiden=!activeHiden">только на сайте\все события</a>
+                    <a ng-init="activeHiden=false" ng-click="activeHiden=!activeHiden">только на сайте\все мероприятия</a>
                 </p>
                 <table class="table table-hover table-condensed table-data">
                     <tr>
