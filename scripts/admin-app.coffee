@@ -26,6 +26,9 @@ configure = ($routeProvider, $locationProvider, $httpProvider, datepickerConfig,
     .when "/videos",
       templateUrl: "videos-view"
       controller: "VideoEditorCtrl"
+    .when "/logout",
+      template: ""
+      controller: "LogoutController"
 
   datepickerConfig.startingDay = 1;
   datepickerConfig.showWeeks = false;

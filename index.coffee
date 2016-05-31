@@ -4,6 +4,7 @@ ect = require "ect"
 mg  = require "mongoose"
 moment = require "moment"
 crypto = require "crypto"
+session = require "client-sessions"
 
 mg.connect('mongodb://localhost/bratstvost-3')
 {Event} = require   "./models/event"
@@ -32,7 +33,12 @@ app
   .use(exs.urlencoded())
   .use(exs.json({limit: '5mb'}))
   .use(exs.cookieParser(COOKIE_SECRET))
-  .use(exs.session())
+  .use(session(
+    cookieName: 'session'
+    secret: 'the_secret_'
+    duration: 30 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000,
+  ))
   .use(exs.logger("short"))
   .use(exs.static("public"))
   .use(app.router)
@@ -44,23 +50,16 @@ app.locals =
 POST_PER_PAGE = 10
 
 users = 
-  vol4ok:
-    login: 'vol4ok'
-    name: 'Andrew Volkov'
-    salt: 'TaRaSiKi'
-    hash: 'vzk6xxSHKMcwoTpF6Ojht7KPLgMUMYU1ONbPHyWOKjctFS0iyEBOvIS0WpIvfLWp1/vb9oBzThIAt8iRumELLczs2CYf3BQo7NE9TcsWxtMvWLT3KYIK7QPbRSHldHypeM/UKVd29DNh9RmQ3t/17A9lhSFvOOg360Rx3CpV5Mw='
-
-  nastena:
-    login: 'nastena'
-    salt: 'TaRaSiKi2013'
-    hash: 'dHj7wHvFYX/RupWr5zRbtPKIWOUGge1jGJldlraZ1sJ+b2ANK7KWYNYpL5PZ2Tol6aGBUMEE+4LtR3CLviZiEvxczLQ5lZEyEFGb1gsNHhEfPv50rbSa0Micie+u0mF5kzKyyzn1fnvf3YEmyM19TSL8cPvtUVriv6RiuAA59iw='
-
   admin:
     login: 'admin'
     salt: 'TaRaSiKi2013'
     hash: 'dHj7wHvFYX/RupWr5zRbtPKIWOUGge1jGJldlraZ1sJ+b2ANK7KWYNYpL5PZ2Tol6aGBUMEE+4LtR3CLviZiEvxczLQ5lZEyEFGb1gsNHhEfPv50rbSa0Micie+u0mF5kzKyyzn1fnvf3YEmyM19TSL8cPvtUVriv6RiuAA59iw='
 
-PASS_SALT = "TaRaSiKi"
+  user:
+    login: 'user'
+    salt: 'TaRaSiKi'
+    hash: 'cGrz5YUCUZryySdwnJW6Bp4kcN2E2+S2Ck3pBC0WN2nZVY9iZ87FE7arSKoiXkYHI01nSfwedNzNnp1iMSXFT+CPVbV1wwGJMm4Rc8oArbSD1GLIFMIsuGcFBPxxaSGQF4mzHCliVA/B3k7/nheDK1fYD/hBOrA5XD8kRFGwJUE='
+
 PASS_ITER = 5000
 HASH_LEN  = 128
 
@@ -103,16 +102,14 @@ app.get '/login', (req, res) ->
 app.post "/login", (req, res) ->
   authenticate req.body.login, req.body.password, (err, user) ->
     if user
-      req.session.regenerate ->
-        req.session.user = user
-        res.redirect("/")
+      req.session.user = user;
+      res.redirect("/")
     else
       res.redirect("/login")
 
 app.get '/logout', (req, res) ->
-  req.session.destroy ->
-    res.redirect('/login')
-    return
+  req.session.user = null
+  res.redirect('/login')
 
 ### EVENTS ###
 
