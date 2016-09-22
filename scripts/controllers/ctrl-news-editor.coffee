@@ -11,7 +11,6 @@ angular.module('appLibs').controller "NewsEditorCtrl", ($scope, $newsSvc, $core,
       return false
 
   $scope.onDelete = (index, aNew) ->
-    console.log("onDelete", index, aNew)
     if confirm("Удалить новость?")
       _.remove $scope.news, (n) -> n._id == aNew._id
       $newsSvc.delete(aNew._id).then ->
@@ -19,7 +18,6 @@ angular.module('appLibs').controller "NewsEditorCtrl", ($scope, $newsSvc, $core,
 
   $scope.onEditOrAdd = (index, news) ->
     editMode = if news then true else false
-    console.log("onEditOrAdd", index, news)
 
     modalInstance = $modal.open
       templateUrl: 'newsModalContent.html'
@@ -52,7 +50,6 @@ angular.module('appLibs').controller "NewsEditorCtrl", ($scope, $newsSvc, $core,
 
         $scope.save = ->
           result = getNewsObj($scope.newNews)
-          console.log "SAVE NEWS", result
           $modalInstance.close(result)
 
         $scope.cancel = ->
@@ -62,7 +59,6 @@ angular.module('appLibs').controller "NewsEditorCtrl", ($scope, $newsSvc, $core,
       if editMode
         index = _.findIndex $scope.news, (news) ->
           return news._id == aNews._id
-        console.log("CHECK", index, $scope.news, $scope.news[index], aNews)
         $scope.news[index] = aNews
         $newsSvc.save(aNews._id, aNews).then ->
           alerts.push({type: "warning", msg: "Обновлено!"})

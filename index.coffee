@@ -114,26 +114,22 @@ app.get '/logout', (req, res) ->
 ### EVENTS ###
 
 app.get "/api/events", (req, res) ->
-  console.log "GET /api/events"
   Event.find {}, (err, results) ->
     return res.json(status: "ERR", message: err) if err
     res.json(results)
 
 app.post "/api/events", restrict, (req, res) ->
-  console.log "POST".green, "/api/events", req.body
   Event.create req.body, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK", _id: result._id)
 
 app.put "/api/events/:id", restrict, (req, res) ->
-  console.log "PUT".magenta, "/api/events/:id", req.params, req.body
   delete req.body._id
   Event.update {"_id": mg.Types.ObjectId(req.params.id)}, req.body, upsert: yes, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
 
 app.del "/api/events/:id", restrict, (req, res) ->
-  console.log "DELETE".red, "/api/events", req.params
   Event.findByIdAndRemove req.params.id, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
@@ -142,26 +138,22 @@ app.del "/api/events/:id", restrict, (req, res) ->
 ### NOTICE ###
 
 app.get "/api/notice", (req, res) ->
-  console.log "GET".green, "/api/notice"
   Notice.find {}, (err, results) ->
     return res.json(status: "ERR", message: err) if err
     res.json(results)
 
 app.post "/api/notice", restrict, (req, res) ->
-  console.log "POST".cyan, "/api/notice", req.body
   Notice.create req.body, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK", _id: result._id)
 
 app.put "/api/notice/:id", restrict, (req, res) ->
-  console.log "PUT".magenta, "/api/notice/:id", req.params, req.body
   delete req.body._id
   Notice.update {"_id": mg.Types.ObjectId(req.params.id)}, req.body, upsert: yes, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
 
 app.del "/api/notice/:id", restrict, (req, res) ->
-  console.log "DELETE".red, "/api/notice/:id", req.params
   Notice.findByIdAndRemove req.params.id, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
@@ -169,26 +161,22 @@ app.del "/api/notice/:id", restrict, (req, res) ->
 ### NEWS ###
 
 app.get "/api/news", (req, res) ->
-  console.log "GET".green, "/api/news"
   News.find {}, (err, results) ->
     return res.json(status: "ERR", message: err) if err
     res.json(results)
 
 app.post "/api/news", restrict, (req, res) ->
-  console.log "POST".cyan, "/api/news", req.body
   News.create req.body, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK", _id: result._id)
 
 app.put "/api/news/:id", restrict, (req, res) ->
-  console.log "PUT".magenta, "/api/news/:id", req.params, req.body
   delete req.body._id
   News.update {"_id": mg.Types.ObjectId(req.params.id)}, req.body, upsert: yes, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
 
 app.del "/api/news/:id", restrict, (req, res) ->
-  console.log "DELETE".red, "/api/news/:id", req.params
   News.findByIdAndRemove req.params.id, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
@@ -196,26 +184,22 @@ app.del "/api/news/:id", restrict, (req, res) ->
 ### MEMBERS ###
 
 app.get "/api/members", (req, res) ->
-  console.log "GET".green, "/api/members"
   Member.find {}, (err, results) ->
     return res.json(status: "ERR", message: err) if err
     res.json(results)
 
 app.post "/api/members", restrict, (req, res) ->
-  console.log "POST".cyan, "/api/members", req.body
   Member.create req.body, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK", _id: result._id)
 
 app.put "/api/members/:id", restrict, (req, res) ->
-  console.log "PUT".magenta, "/api/members/:id", req.params, req.body
   delete req.body._id
   Member.update {"_id": mg.Types.ObjectId(req.params.id)}, req.body, upsert: yes, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
 
 app.del "/api/members/:id", restrict, (req, res) ->
-  console.log "DELETE".red, "/api/members/:id", req.params
   Member.findByIdAndRemove req.params.id, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
@@ -224,26 +208,22 @@ app.del "/api/members/:id", restrict, (req, res) ->
 ### VIDEO ###
 
 app.get "/api/video", (req, res) ->
-  console.log "GET".green, "/api/video"
   Video.find {}, (err, results) ->
     return res.json(status: "ERR", message: err) if err
     res.json(results)
 
 app.post "/api/video", restrict, (req, res) ->
-  console.log "POST".cyan, "/api/video", req.body
   Video.create req.body, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK", _id: result._id)
 
 app.put "/api/video/:id", restrict, (req, res) ->
-  console.log "PUT".magenta, "/api/video/:id", req.params, req.body
   delete req.body._id
   Video.update {"_id": mg.Types.ObjectId(req.params.id)}, req.body, upsert: yes, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
 
 app.del "/api/video/:id", restrict, (req, res) ->
-  console.log "DELETE".red, "/api/video/:id", req.params
   Video.findByIdAndRemove req.params.id, (err, result) ->
     return res.json(status: "ERR", message: err) if err
     res.json(status: "OK")
@@ -251,7 +231,6 @@ app.del "/api/video/:id", restrict, (req, res) ->
 ### ALL ###
 
 app.all "*", restrict, (req, res) ->
-  console.log "GET all *", req.path
   res.render("index")
 
 port = process.env.PORT || 5001

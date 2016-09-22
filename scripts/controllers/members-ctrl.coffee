@@ -2,7 +2,6 @@ angular.module('appLibs').directive 'modalWindow', ->
   return {
     restrict: 'EA'
     link: (scope, element) ->
-      console.log scope, element
       element.find('.modal-dialog').addClass('modal-lg')
     }
 
@@ -22,7 +21,6 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
         return false
 
     $scope.onDelete = (index, member) ->
-      console.log("onDelete", index, member)
       if confirm("Удалить #{member.fullName}?")
         _.remove $scope.members, (memb) -> memb._id == member._id
         $core.$members.delete(member._id).then ->
@@ -30,7 +28,6 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
 
     $scope.onEditOrAdd = (index, memb) ->
       editMode = if memb then true else false
-      console.log("onEditOrAdd", index, memb)
 
       modalInstance = $modal.open
         templateUrl: 'myModalContent.html'
@@ -101,7 +98,6 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
             if result.angelDate && result.angelDate instanceof Date
               result.angelDate.setHours(0)
               result.angelDate = new Date(result.angelDate.getTime() + Math.abs(result.angelDate.getTimezoneOffset()) * 60000)
-            console.log "SAVE MEMBER", result
             $modalInstance.close(result)
 
           $scope.cancel = ->
@@ -112,7 +108,6 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
         if editMode
           index = _.findIndex $scope.members, (memb) ->
             return memb._id == member._id
-          console.log("CHECK", index, $scope.members, $scope.members[index], member)
           $scope.members[index] = member
           $core.$members.save(member).then ->
             alerts.push({type: "warning", msg: "Обновлено!"})

@@ -13,7 +13,6 @@ angular.module('appLibs').controller "VideoEditorCtrl", ($scope, $videoSvc, $cor
       return false
 
   $scope.onDelete = (index, video) ->
-    console.log("onDelete", index, video)
     if confirm("Удалить видео?")
       _.remove $scope.videos, (vid) -> vid._id == video._id
       $videoSvc.delete(video._id).then ->
@@ -21,7 +20,6 @@ angular.module('appLibs').controller "VideoEditorCtrl", ($scope, $videoSvc, $cor
 
   $scope.onEditOrAdd = (index, cVideo) ->
     editMode = if cVideo then true else false
-    console.log("onEditOrAdd", index, cVideo)
 
     modalInstance = $modal.open
       templateUrl: 'videoModalContent.html'
@@ -59,7 +57,6 @@ angular.module('appLibs').controller "VideoEditorCtrl", ($scope, $videoSvc, $cor
 
         $scope.save = ->
           result = getVideoObj($scope.newVideo)
-          console.log "SAVE VIDEO", result
           $modalInstance.close(result)
 
         $scope.cancel = ->
@@ -71,7 +68,6 @@ angular.module('appLibs').controller "VideoEditorCtrl", ($scope, $videoSvc, $cor
       if editMode
         index = _.findIndex $scope.videos, (cVideo) ->
           return cVideo._id == video._id
-        console.log("CHECK", index, $scope.videos, $scope.videos[index], video)
         $scope.videos[index] = video
         $videoSvc.save(video._id, video).then ->
           alerts.push({type: "warning", msg: "Обновлено!"})

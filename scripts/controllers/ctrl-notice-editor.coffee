@@ -13,7 +13,6 @@ angular.module('appLibs').controller "NoticeEditorCtrl", ($scope, $noticeSvc, $c
       return false
 
   $scope.onDelete = (index, notice) ->
-    console.log("onDelete", index, notice)
     if confirm("Удалить объявление?")
       _.remove $scope.notices, (note) -> note._id == notice._id
       $noticeSvc.delete(notice._id).then ->
@@ -21,7 +20,6 @@ angular.module('appLibs').controller "NoticeEditorCtrl", ($scope, $noticeSvc, $c
 
   $scope.onEditOrAdd = (index, note) ->
     editMode = if note then true else false
-    console.log("onEditOrAdd", index, note)
 
     modalInstance = $modal.open
       templateUrl: 'modalContent.html'
@@ -59,7 +57,6 @@ angular.module('appLibs').controller "NoticeEditorCtrl", ($scope, $noticeSvc, $c
 
         $scope.save = ->
           result = getNoticeObj($scope.newNotice)
-          console.log "SAVE NOTICE", result
           $modalInstance.close(result)
 
         $scope.cancel = ->
@@ -69,7 +66,6 @@ angular.module('appLibs').controller "NoticeEditorCtrl", ($scope, $noticeSvc, $c
       if editMode
         index = _.findIndex $scope.notices, (note) ->
           return note._id == notice._id
-        console.log("CHECK", index, $scope.notices, $scope.notices[index], notice)
         $scope.notices[index] = notice
         $noticeSvc.save(notice._id, notice).then ->
           alerts.push({type: "warning", msg: "Обновлено!"})

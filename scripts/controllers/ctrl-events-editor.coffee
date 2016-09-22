@@ -13,7 +13,6 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
       return false
 
   $scope.onDelete = (index, event) ->
-    console.log("onDelete", index, event)
     if confirm("Удалить мероприятие?")
       _.remove $scope.events, (evt) -> evt._id == event._id
       $eventsSvc.delete(event._id).then ->
@@ -21,7 +20,6 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
 
   $scope.onEditOrAdd = (index, event) ->
     editMode = if event then true else false
-    console.log("onEditOrAdd", index, event)
 
     modalInstance = $modal.open
       templateUrl: 'eventModalContent.html'
@@ -78,7 +76,6 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
             result.date = new Date(result.date.getTime() + Math.abs(result.date.getTimezoneOffset()) * 60000)
           if result.title
             result.title = result.title.replace(/ПНИ/g, "<abbr title=\"Психоневрологический интернат\">ПНИ</abbr>")
-          console.log "SAVE EVENT", result
           $modalInstance.close(result)
 
         $scope.cancel = ->
@@ -90,7 +87,6 @@ angular.module('appLibs').controller "EventEditorCtrl", ($scope, $eventsSvc, $co
       if editMode
         index = _.findIndex $scope.events, (evt) ->
           return evt._id == event._id
-        console.log("CHECK", index, $scope.events, $scope.events[index], event)
         $scope.events[index] = event
         $eventsSvc.save(event._id, event).then ->
           alerts.push({type: "warning", msg: "Обновлено!"})

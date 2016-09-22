@@ -23,7 +23,6 @@ $videoSvc = ($q, $http) ->
     if arguments.length is 1
       doc = id
       id = doc._id
-    console.log "AD_SVC: save", id, doc
     deffered = $q.defer()
     doc.updated = moment().toISOString()
     $http.put("/api/video/#{id}", doc)
