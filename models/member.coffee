@@ -17,6 +17,7 @@ MemberSchema = new Schema
   skype: String
   info: String
   active: { type: Boolean, default: yes }
+  reserved: { type: Boolean, default: no }
   orderNumber: { type: Number, default: 50 }
   created: { type: Date, default: Date.now }
   updated: { type: Date, default: Date.now }

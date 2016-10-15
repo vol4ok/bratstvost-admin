@@ -54,6 +54,7 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
                birthDate:''
                angelDate:''
                active: yes
+               reserved: no
                orderNumber: 50 }
 
           getMemberObj = (newMember) ->
@@ -76,6 +77,7 @@ angular.module('appLibs').controller "MembersCtrl", ($scope, $core, $modal, uuid
             member.info = FSM(newMember.info)
             member.phone = newMember.phone
             member.active = !!newMember.active
+            member.reserved = !!newMember.reserved
             member.orderNumber = newMember.orderNumber
             member.birthDate = newMember.birthDate
             member.angelDate  = newMember.angelDate
